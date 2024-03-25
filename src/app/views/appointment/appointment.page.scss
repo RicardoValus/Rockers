@@ -2,12 +2,96 @@
   border: 2px solid #2dd36f;
 }
 
+.top-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  background-color: #AEB7B3;
+
+}
+
+// height 15vh -  width39%
+.logo-img {
+  width: 75%;
+  height: auto;
+}
+
 .card-content-2 {
   width: 100%;
   flex: 1;
 }
 
-ion-item {
+// .body-container{
+//   height: 77%;
+// }
+
+.item-grid {
   --background: transparent;
   --border-style: none;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  // border-bottom: 1px solid #AEB7B3;
+}
+
+.select-barber-title {
+  margin-left: 5%;
+}
+
+.div-grid {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+.div-calendar {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+.card-barber {
+  border: 2px solid #AEB7B3;
+}
+
+.card-calendar {
+  // --background: #AEB7B3;
+  //  height: 50px;
+  border: 2px solid #AEB7B3;
+}
+
+.card-appointment {
+  border: 2px solid #AEB7B3;
+}
+
+.div-my-appointment {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+// ion-item[slot="header"] {
+//   --background: #AEB7B3;
+// }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.agend-button {
+  width: 75%;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

@@ -1,0 +1,15 @@
+<div class="div-calendar">
+  <ion-card class="card-calendar">
+    <ion-card-header (click)="toggleCalendar()">
+      <ion-card-title>Calendário</ion-card-title>
+      <ion-card-subtitle *ngIf="selectedDateTime">{{ getFormattedDateTime() }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content *ngIf="showCalendar">
+      <ion-datetime display-format="DD/MM/YYYY HH:mm" [showDefaultButtons]="true" doneText="Selecionar"
+        cancelText="Fechar" [min]="getMinDate()" [isDateEnabled]="isWeekday" [(ngModel)]="selectedDateTime"
+        (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()">
+        <!-- <span slot="title">Escolha a data e hora</span> [showDefaultTitle]="true" -->
+      </ion-datetime>
+    </ion-card-content>
+  </ion-card>
+</div>

@@ -21,7 +21,7 @@
     .get('password')?.errors && loginForm.get('password')?.touched">
       A senha é obrigatória
     </ion-text>
-    <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/home">
+    <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/home" (click)="confirmToast('top')">
       ENTRAR
     </ion-button>
     <div class="route-login">

@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'appointment',
     loadChildren: () => import('./views/appointment/appointment.module').then( m => m.AppointmentPageModule)
   },
+  {
+    path: 'calendar-modal',
+    loadChildren: () => import('./Teste/calendar-modal/calendar-modal.module').then( m => m.CalendarModalPageModule)
+  },
 
 
 

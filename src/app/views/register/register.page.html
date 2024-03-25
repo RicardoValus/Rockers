@@ -35,7 +35,8 @@
     .get('password')?.errors && registerForm.get('password')?.touched">
       A confirmação da senha é obrigatória
     </ion-text>
-    <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/user-profile">
+    <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/user-profile"
+      (click)="confirmToast('top')">
       REGISTRAR
     </ion-button>
     <div class="route-register">

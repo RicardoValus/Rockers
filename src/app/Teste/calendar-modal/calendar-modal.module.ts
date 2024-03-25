@@ -4,18 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AppointmentPageRoutingModule } from './appointment-routing.module';
+import { CalendarModalPageRoutingModule } from './calendar-modal-routing.module';
 
-import { AppointmentPage } from './appointment.page';
+import { CalendarModalPage } from './calendar-modal.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AppointmentPageRoutingModule,
-  
+    CalendarModalPageRoutingModule
   ],
-  declarations: [AppointmentPage]
+  declarations: [CalendarModalPage]
 })
-export class AppointmentPageModule {}
+export class CalendarModalPageModule {}

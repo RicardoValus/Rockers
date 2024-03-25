@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -23,5 +24,15 @@ export class RegisterPage implements OnInit {
 
   goToRegisterPage() {
     this.router.navigate(['/login']);
+  }
+
+  async confirmToast(position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastCtrl.create({
+      message: 'Registro realizado com sucesso!',
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
   }
 }

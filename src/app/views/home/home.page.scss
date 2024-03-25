@@ -20,10 +20,15 @@
   margin: auto;
 }
 
-.title-container,
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
 .title {
   display: flex;
   justify-content: center;
+  // border-bottom: 1px solid #AEB7B3;
 }
 
 .services-grid ion-row {
