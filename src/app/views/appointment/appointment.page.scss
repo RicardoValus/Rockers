@@ -1,0 +1,13 @@
+.selected {
+  border: 2px solid #2dd36f;
+}
+
+.card-content-2 {
+  width: 100%;
+  flex: 1;
+}
+
+ion-item {
+  --background: transparent;
+  --border-style: none;
+}

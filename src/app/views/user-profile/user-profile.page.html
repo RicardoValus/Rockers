@@ -1,0 +1,28 @@
+<ion-content>
+  <div class="profile-header">
+    <div class="profile-picture" *ngIf="profilePicture">
+      <img [src]="profilePicture" alt="User Profile">
+    </div>
+  </div>
+  <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="form-container">
+    <ion-item class="name-item-1">
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input formControlName="name" required></ion-input>
+    </ion-item>
+    <div class="name-item-container">
+      <div>
+        <ion-text class="name-item-2" color="danger"
+          *ngIf="profileForm.get('name')?.errors && profileForm.get('name')?.touched">
+          O nome é obrigatório
+        </ion-text>
+      </div>
+    </div>
+    <ion-item class="input-file">
+      <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
+      <input id="file-input" class="file-input" type="file" accept="image/*" (change)="handleFileInput($event)" />
+    </ion-item>
+    <ion-button type="submit" class="save-profile-button" expand="block" shape="round" routerLink="/login">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>

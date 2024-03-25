@@ -1,0 +1,61 @@
+.form-container {
+  max-width: 360px;
+  margin: auto;
+}
+
+.top-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  background-color: #AEB7B3;
+}
+
+.logo-img {
+  width: 75%;
+  height: auto;
+}
+
+.login-item-1,
+.password-item-1 {
+  width: 90%;
+  margin: 10px auto;
+  border-radius: 4px 4px 0 0;
+  border: medium solid darkgray;
+}
+
+.login-item-2,
+.password-item-2 {
+  width: 90%;
+  margin: 0 auto;
+  padding: 4px 16px 0;
+  font-size: 12px;
+}
+
+.custom-button-1 {
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    max-width: 90%;
+  }
+}
+
+.route-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.route-login ion-label,
+.route-login a {
+  margin-top: 10px;
+}

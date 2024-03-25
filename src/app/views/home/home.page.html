@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="top-background">
+    <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
+  </div>
+  <div body-container>
+    <div class="title-container">
+      <h1 class="title">Serviços</h1>
+    </div>
+    <ion-grid class="services-grid">
+      <ion-row>
+        <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let service of services">
+          <ion-card [class.selected]="isSelected(service)" (click)="toggleService(service)" class="card">
+            <ion-card-content class="card-content-1">
+              <ion-img [src]="getImagePath(service)" class="images"></ion-img>
+            </ion-card-content>
+            <ion-card-content class="card-content-2">
+              {{ service }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="button-container">
+      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment">Confirmar</ion-button>
+    </div>
+  </div>
+</ion-content>

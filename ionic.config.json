@@ -1,0 +1,7 @@
+{
+  "name": "RockersCut",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

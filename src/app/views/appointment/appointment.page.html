@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <!-- Seu código de cabeçalho aqui -->
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div body-container>
+
+    <div class="title-container">
+      <h1 class="title">Agendamento</h1>
+    </div>
+
+    <div>
+      <div>
+        <h3>Selecione o Barbeiro</h3>
+      </div>
+      <div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let barber of barbers">
+              <div (click)="toggleBarber(barber)" [class.selected]="isSelected(barber)">
+                <ion-list>
+                  <ion-item-group>
+                    <ion-item>
+                      <ion-avatar slot="start">
+                        <img [src]="getImagePath(barber)">
+                      </ion-avatar>
+                      <ion-label>
+                        <h2>{{ barber }}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-item-group>
+                </ion-list>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div>
+      <ion-card>
+        <ion-card-header (click)="toggleCalendar()">
+          <ion-card-title>Calendário</ion-card-title>
+        </ion-card-header>
+        <ion-card-content *ngIf="showCalendar">
+          <ion-datetime 
+            locale="pt-BR" 
+            [showDefaultTitle]="true" 
+            [showDefaultButtons]="true" 
+            [isDateEnabled]="isWeekday" 
+            doneText="Selecionar" 
+            cancelText="Fechar"
+            (ionCancel)="closeCalendar()"
+            (ionDone)="selectDateAndClose($event)">
+            <span slot="title">Escolha a data e hora</span>
+          </ion-datetime>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    
+
+
+
+
+
+
+
+    <div class="button-container">
+      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment">Confirmar</ion-button>
+    </div>
+
+  </div>
+
+</ion-content>
