@@ -11,7 +11,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class AppointmentPage implements OnInit {
 
   selectedDateTime!: string;
-  selectedBarber: string | null = null; // Armazena o barbeiro selecionado
+  selectedBarber: string | null = null;
   barbers: string[] = ['Barber 1', 'Barber 2'];
   // , 'Barber 3', 'Barber 4'
   showCalendar: boolean = false;
@@ -84,7 +84,7 @@ export class AppointmentPage implements OnInit {
   isWeekday = (dateString: string) => {
     const date = new Date(dateString);
     const utcDay = date.getUTCDay();
-    return utcDay !== 0 && utcDay !== 6; // 0 para Domingo, 6 para Sábado
+    return utcDay !== 0 && utcDay !== 6;
   };
 
   async presentAlert() {
