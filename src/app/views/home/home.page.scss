@@ -6,12 +6,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 20vh;
   background-color: #AEB7B3;
 }
 
 .logo-img {
-  width: 75%;
+  width: 50%;
   height: auto;
 }
 
@@ -46,6 +46,7 @@
   flex-direction: column;
   height: 165px;
   margin-bottom: 10px;
+  border-radius: 20px;
 }
 
 .services-grid {
@@ -99,4 +100,19 @@
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.div-footer{
+  background-color: #AEB7B3;
+
+}
+
+.div-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  > div {
+    margin: 0 10px;
+  }
 }

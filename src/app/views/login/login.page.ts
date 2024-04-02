@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
 
   async confirmToast(position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastCtrl.create({
-      message: 'Login realizado com sucesso!',
+      message: 'Você entrou com sucesso!',
       duration: 1500,
       position: position,
     });

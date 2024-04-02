@@ -1,8 +1,12 @@
-<ion-content [fullscreen]="true">
-
+<ion-header [translucent]="true">
   <div class="top-background">
     <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
   </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
 
   <div class="body-container">
 
@@ -44,20 +48,32 @@
     </div>
 
 
-    <!-- <ion-button (click)="openModal()">Abrir Modal</ion-button> -->
+
 
     <div class="div-calendar">
       <ion-card class="card-calendar">
         <ion-card-header (click)="toggleCalendar()">
-          <ion-card-title>Calendário</ion-card-title>
-          <ion-card-subtitle *ngIf="selectedDateTime">{{ getFormattedDateTime() }}</ion-card-subtitle>
+          <ion-card-title>Data</ion-card-title>
+          <ion-card-subtitle *ngIf="selectedDate">{{ getFormattedDate() }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content *ngIf="showCalendar">
-          <ion-datetime display-format="DD/MM/YYYY HH:mm" [showDefaultButtons]="true" doneText="Selecionar"
-            cancelText="Fechar" [min]="getMinDate()" [isDateEnabled]="isWeekday" [(ngModel)]="selectedDateTime"
-            (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()">
-            <!-- <span slot="title">Escolha a data e hora</span> [showDefaultTitle]="true"  -->
+          <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar"
+            cancelText="Fechar" [min]="getMinDate()" [isDateEnabled]="isWeekday" [(ngModel)]="selectedDate"
+            (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()" presentation="date">
           </ion-datetime>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="div-time">
+      <ion-card class="card-time">
+        <ion-card-header (click)="toggleTime()">
+          <ion-card-title>Horários</ion-card-title>
+          <ion-card-subtitle *ngIf="selectedTime">{{ getFormattedTime() }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content *ngIf="showTime">
+          <ion-datetime presentation="time" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
+            [(ngModel)]="selectedTime" (ionCancel)="closeTime()" (ionDone)="closeTime()"></ion-datetime>
         </ion-card-content>
       </ion-card>
     </div>
@@ -72,8 +88,16 @@
           <ion-list>
             <ion-item>
               <ion-icon slot="start" name="checkbox-outline"></ion-icon>
-              <ion-label>Teste de horário</ion-label>
-              <ion-button slot="end" color="danger" (click)="presentAlert()">
+              <ion-label>Agendado para 03/06/2024 às 18:00 com Leo</ion-label>
+              <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+              <ion-label>Teste de agendamento</ion-label>
+              <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
                 <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-item>
@@ -83,30 +107,32 @@
     </div>
 
     <div class="button-container">
-      <ion-button class="agend-button" expand="block" shape="round" routerLink="/appointment"
-        (click)="confirmToast('top')">Agendar</ion-button>
+      <ion-button class="agend-button" expand="block" shape="round" (click)="confirmToast('top')">Agendar</ion-button>
     </div>
 
 
 
   </div>
 
-  <!-- <div class="footer-container">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-tab-button tab="tabMenu" >
-            <ion-icon name="menu"></ion-icon>
-            <ion-label>Serviços</ion-label>
-          </ion-tab-button>
-        </ion-col>
-        <ion-col>
-          
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div> -->
-
-
 
 </ion-content>
+
+<ion-footer class="div-footer">
+  <div class="div-buttons">
+    <div>
+      <ion-button fill="clear" size="large" (click)="exitAlert()">
+        <ion-icon slot="icon-only" name="exit" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+    <div>
+      <ion-button fill="clear" size="large" routerLink="/home">
+        <ion-icon slot="icon-only" name="home" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+    <div>
+      <ion-button fill="clear" size="large" routerLink="/appointment">
+        <ion-icon slot="icon-only" name="calendar" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-footer>

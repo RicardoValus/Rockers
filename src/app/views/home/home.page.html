@@ -1,7 +1,10 @@
-<ion-content>
+<ion-header [translucent]="true">
   <div class="top-background">
     <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
   </div>
+</ion-header>
+
+<ion-content>
   <div body-container>
     <div class="title-container">
       <h1 class="title">Serviços</h1>
@@ -25,3 +28,23 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer class="div-footer">
+  <div class="div-buttons">
+    <div>
+      <ion-button fill="clear" size="large" (click)="exitAlert()">
+        <ion-icon slot="icon-only" name="exit" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+    <div>
+      <ion-button fill="clear" size="large" routerLink="/home">
+        <ion-icon slot="icon-only" name="home" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+    <div>
+      <ion-button fill="clear" size="large" routerLink="/appointment">
+        <ion-icon slot="icon-only" name="calendar" color="dark"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-footer>

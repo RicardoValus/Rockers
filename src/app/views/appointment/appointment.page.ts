@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 // import { CalendarModalPage } from 'src/app/calendar-modal/calendar-modal.page';
 // import { ModalController } from '@ionic/angular';
@@ -10,19 +11,23 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class AppointmentPage implements OnInit {
 
-  selectedDateTime!: string;
   selectedBarber: string | null = null;
   barbers: string[] = ['Barber 1', 'Barber 2'];
   // , 'Barber 3', 'Barber 4'
   showCalendar: boolean = false;
+  selectedDate!: string;
+  showTime: boolean = false;
+  selectedTime: string | null = null;
+  hourValues: string[] = [];
 
   constructor(
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    // private modalController: ModalController
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.generateHourValues();
   }
 
   toggleBarber(barber: string) {
@@ -62,18 +67,19 @@ export class AppointmentPage implements OnInit {
   }
 
   selectDateAndClose(event: any) {
-    this.selectedDateTime = event.detail.value;
+    this.selectedDate = event.detail.value;
     this.showCalendar = false;
   }
 
-  getFormattedDateTime(): string {
-    if (!this.selectedDateTime) return '';
+  getFormattedDate(): string {
+    if (!this.selectedDate) return '';
 
-    const date = new Date(this.selectedDateTime);
+    const date = new Date(this.selectedDate);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    const formattedTime = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    // const formattedTime = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
 
-    return `Agendado para ${formattedDate} às ${formattedTime}`;
+    return `Data agendada para ${formattedDate}`;
+    // às ${formattedTime}
   }
 
   getMinDate(): string {
@@ -87,7 +93,61 @@ export class AppointmentPage implements OnInit {
     return utcDay !== 0 && utcDay !== 6;
   };
 
-  async presentAlert() {
+  toggleTime() {
+    if (this.showCalendar) {
+      this.showCalendar = false;
+    }
+    this.showTime = !this.showTime;
+  }
+  
+
+  closeTime() {
+    this.showTime = false;
+  }
+
+  selectTimeAndClose(event: any) {
+    this.selectedTime = event.detail.value;
+    this.showTime = false;
+  }
+  
+
+  getFormattedTime(): string {
+    if (!this.selectedTime) return '';
+
+    const time = new Date(this.selectedTime);
+    const formattedTime = `${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}`;
+
+    return `Horário agendado para às ${formattedTime}`;
+  }
+
+  generateHourValues() {
+    const startHour = 9;
+    const endHour = 17;
+
+    for (let hour = startHour; hour <= endHour; hour++) {
+      const time = hour < 10 ? `0${hour}:00` : `${hour}:00`;
+      this.hourValues.push(time);
+    }
+  }
+
+  isHourDisabled(hour: string): boolean {
+    const scheduledAppointments: string[] = ['10:00', '13:00', '15:00'];
+  
+    return scheduledAppointments.includes(hour);
+  }
+
+
+    async confirmToast(position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastCtrl.create({
+      message: 'Agendamento realizado com sucesso!',
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
+
+  async cancelAppointmentAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Deseja cancelar seu agendamento?',
       buttons: [
@@ -100,7 +160,7 @@ export class AppointmentPage implements OnInit {
           text: 'Sim',
           cssClass: 'alert-button-confirm',
           handler: () => {
-            this.presentToast();
+            this.cancelAppointmentToast();
           },
         },
       ],
@@ -109,32 +169,44 @@ export class AppointmentPage implements OnInit {
     await alert.present();
   }
 
-  async presentToast() {
+  async cancelAppointmentToast() {
     const toast = await this.toastCtrl.create({
       message: 'Agendamento cancelado com sucesso!',
-      duration: 2000,
+      duration: 1500,
       position: 'top',
     });
     toast.present();
   }
 
-  async confirmToast(position: 'top' | 'middle' | 'bottom') {
-    const toast = await this.toastCtrl.create({
-      message: 'Agendamento realizado com sucesso!',
-      duration: 1500,
-      position: position,
+  async exitAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Deseja sair da sua conta?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          cssClass: 'alert-button-confirm',
+          handler: () => {
+            this.exitToast();
+            this.router.navigate(['/login']);
+          },
+        },
+      ],
     });
 
-    await toast.present();
+    await alert.present();
   }
 
-  // async openModal() {
-  //   const modal = await this.modalController.create({
-  //     component: CalendarModalPage,
-  //     componentProps: {
-  //       // Se precisar passar parâmetros para a página modal, você pode fazer isso aqui
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
+  async exitToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Você saiu com sucesso!',
+      duration: 1500,
+      position: 'top',
+    });
+    toast.present();
+  }
 }

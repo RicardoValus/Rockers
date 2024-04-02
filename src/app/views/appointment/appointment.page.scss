@@ -6,14 +6,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 20vh;
   background-color: #AEB7B3;
 
 }
 
 // height 15vh -  width39%
 .logo-img {
-  width: 75%;
+  width: 50%;
   height: auto;
 }
 
@@ -51,23 +51,20 @@
   padding-left: 1%;
 }
 
-.div-calendar {
+.div-calendar,
+.div-time {
   padding-right: 1%;
   padding-left: 1%;
 }
 
-.card-barber {
-  border: 2px solid #AEB7B3;
-}
-
-.card-calendar {
+.card-barber,
+.card-appointment,
+.card-calendar,
+.card-time {
   // --background: #AEB7B3;
   //  height: 50px;
   border: 2px solid #AEB7B3;
-}
-
-.card-appointment {
-  border: 2px solid #AEB7B3;
+  border-radius: 20px;
 }
 
 .div-my-appointment {
@@ -94,4 +91,23 @@
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.div-footer{
+  background-color: #AEB7B3;
+
+}
+
+.div-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Alinha os botões no extremo direito e esquerdo */
+
+  > div {
+    margin: 0 10px; /* Adiciona espaçamento entre os botões */
+  }
+}
+
+.teste1, .teste2, .teste3 {
+  background-color: red;
 }

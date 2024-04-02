@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <div class="top-background">
+    <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="title-container">
+    <h1 class="title">Administração</h1>
+  </div>
+
+  <div>
+    <ion-card class="card-barber">
+      <ion-card-header>
+        <ion-card-title>Barbeiros</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="barbers-container">
+          <div *ngFor="let barber of barbers" class="barber-item" [class.selected-barber]="selectedBarber === barber"
+            (click)="selectBarber(barber)">
+            <img [src]="barber.avatar" alt="{{ barber.name }}" class="barber-avatar">
+            <p>{{ barber.name }}</p>
+          </div>
+
+        </div>
+        <ion-button (click)="toggleAddBarber()" expand="block" shape="round" class="add-button">
+          <ion-icon name="add"></ion-icon> Adicionar Barbeiro
+        </ion-button>
+        <ion-button (click)="removeBarber()" color="danger" expand="block" shape="round">
+          <ion-icon name="trash"></ion-icon> Remover Barbeiro
+        </ion-button>
+        <ion-item *ngIf="showAddBarber">
+          <ion-label position="floating">Nome do Barbeiro</ion-label>
+          <ion-input type="text" [(ngModel)]="newBarberName"></ion-input>
+          <input type="file" (change)="handleFileInput($event)" accept="image/*">
+          <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="div-calendar">
+    <ion-card class="card-calendar">
+      <ion-card-header (click)="toggleCalendar()">
+        <ion-card-title>Calendário em construção</ion-card-title>
+        <ion-card-subtitle></ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngIf="showCalendar">
+        <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
+          [min]="getMinDate()" [isDateEnabled]="isWeekday" (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()"
+          presentation="date">
+        </ion-datetime>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div>
+    <ion-card class="card-client">
+      <ion-card-header>
+        <ion-card-title>Clientes</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+
+            <ion-list>
+              <ion-item class="item-client">
+                Cliente: Ricardo
+              </ion-item>
+              <ion-item class="item-client">
+                Serviço: Aparar
+              </ion-item>
+              <ion-item class="item-client">
+                Agendamento: 03/06/2024 às 13:00
+              </ion-item>
+            </ion-list>
+
+            <ion-button slot="end" color="danger">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+
+        <ion-item>
+          <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+
+          <ion-list>
+            <ion-item class="item-client">
+              Cliente: Pedro
+            </ion-item>
+            <ion-item class="item-client">
+              Serviço: Cuidado capilar
+            </ion-item>
+            <ion-item class="item-client">
+              Agendamento: 03/06/2024 às 15:00
+            </ion-item>
+          </ion-list>
+
+          <ion-button slot="end" color="danger">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+</ion-content>

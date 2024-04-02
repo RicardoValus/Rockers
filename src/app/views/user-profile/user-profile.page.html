@@ -1,9 +1,12 @@
-<ion-content>
+<ion-header [translucent]="true">
   <div class="profile-header">
     <div class="profile-picture" *ngIf="profilePicture">
       <img [src]="profilePicture" alt="User Profile">
     </div>
   </div>
+</ion-header>
+
+<ion-content>
   <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="form-container">
     <ion-item class="name-item-1">
       <ion-label position="floating">Nome</ion-label>

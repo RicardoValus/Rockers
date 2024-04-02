@@ -1,0 +1,84 @@
+.top-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+  background-color: #AEB7B3;
+}
+
+// height 15vh -  width39%
+.logo-img {
+  width: 50%;
+  height: auto;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  // border-bottom: 1px solid #AEB7B3;
+}
+
+.item-client {
+  --background: transparent;
+  --border-style: none;
+  margin-bottom: 7px;
+}
+
+.barbers-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.barber-item {
+  flex-shrink: 0;
+  width: 150px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.barber-avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (max-width: 576px) {
+  .barbers-container {
+    flex-wrap: wrap;
+
+    justify-content: center;
+    overflow-x: initial;
+  }
+
+  .barber-item {
+    margin-bottom: 10px;
+  }
+}
+
+.add-button {
+  margin: 20px auto;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
+}
+
+.card-barber,
+.card-calendar,
+.card-client {
+  border: 2px solid #AEB7B3;
+  border-radius: 40px;
+}
+
+.selected-barber {
+  border: 2px solid #2dd36f;
+  border-radius: 20px;
+  padding: 5px;
+}

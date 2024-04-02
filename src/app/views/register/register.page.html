@@ -1,7 +1,10 @@
-<ion-content>
+<ion-header [translucent]="true">
   <div class="top-background">
-    <ion-img src="assets/Logo.png" alt="Logo" class="logo-img"></ion-img>
+    <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
   </div>
+</ion-header>
+
+<ion-content>
   <form [formGroup]="registerForm" class="form-container">
     <ion-item class="register-user-1">
       <ion-label position="floating">Nome de usuário</ion-label>
