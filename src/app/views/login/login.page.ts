@@ -16,7 +16,9 @@ export class LoginPage implements OnInit {
 
   constructor(
 
-    private formBuilder: FormBuilder, private router: Router, private toastCtrl: ToastController
+    private formBuilder: FormBuilder, 
+    private router: Router, 
+    private toastCtrl: ToastController
 
   ) { }
 
@@ -29,6 +31,10 @@ export class LoginPage implements OnInit {
 
   goToRegisterPage() {
     this.router.navigate(['/register']);
+  }
+  
+  goToResetPassword() {
+    this.router.navigate(['/reset-password']);
   }
 
   async confirmToast(position: 'top' | 'middle' | 'bottom') {

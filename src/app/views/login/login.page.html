@@ -9,7 +9,7 @@
   <form [formGroup]="loginForm" class="form-container">
 
     <ion-item class="login-item-1">
-      <ion-label position="floating">Usuário</ion-label>
+      <ion-label position="floating">E-mail</ion-label>
       <ion-input formControlName="username" required></ion-input>
     </ion-item>
     <ion-text class="login-item-2" color="danger" *ngIf="loginForm
@@ -25,6 +25,9 @@
     .get('password')?.errors && loginForm.get('password')?.touched">
       A senha é obrigatória
     </ion-text>
+    <div class="forgot-password">
+      <a (click)="goToResetPassword()">Esqueceu a senha?</a>
+    </div>
     <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/home" (click)="confirmToast('top')">
       ENTRAR
     </ion-button>

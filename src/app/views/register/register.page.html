@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="registerForm" class="form-container">
+  <form [formGroup]="registerForm" class="form-container" >
     <ion-item class="register-user-1">
       <ion-label position="floating">Nome de usuário</ion-label>
       <ion-input formControlName="username" required></ion-input>
@@ -38,8 +38,7 @@
     .get('password')?.errors && registerForm.get('password')?.touched">
       A confirmação da senha é obrigatória
     </ion-text>
-    <ion-button class="custom-button-1" expand="block" shape="round" routerLink="/user-profile"
-      (click)="confirmToast('top')">
+    <ion-button type="submit" class="custom-button-1" expand="block" shape="round">
       REGISTRAR
     </ion-button>
     <div class="route-register">
