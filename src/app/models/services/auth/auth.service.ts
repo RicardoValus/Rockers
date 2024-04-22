@@ -8,13 +8,83 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-dataUser: any;
-user: any;
+  userData: any;
+  useruserData: any;
 
   constructor(
-    private firestore: AngularFirestore,
     private auth: AngularFireAuth,
-    private router: Router,
-    private storage: AngularFireStorage
-  ) { }
+    private storage: AngularFireStorage,
+    private firestore: AngularFirestore,
+    private router: Router
+  ) { 
+    this.auth.authState.subscribe(user => {
+      if(user){
+        this.userData = {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          mediaURL: user.photoURL
+        }
+        localStorage.setItem('user', JSON.stringify(this.userData));
+      } else {
+        localStorage.setItem('user', 'null')
+      }
+    });
+  }
+
+  async register(email: string, password: string, name: string, mediaURL: File | undefined){
+    try{
+      const userCredentials = await this.auth.createUserWithEmailAndPassword(email, password);
+      const user = userCredentials.user;
+      let mediaURLUploaded: string | undefined = undefined;
+      if(user){
+        if(mediaURL){
+          const uploadResult = await this.uploadImage(mediaURL, user.uid);
+          mediaURLUploaded = uploadResult;
+        }
+        this.userData={
+          uid: user.uid,
+          email: user.email,
+          name: name,
+          mediaURL: mediaURLUploaded
+        };
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        await this.firestore.collection('users').doc(user.uid).set({
+          uid: user.uid,
+          email: user.email,
+          name: name,
+          mediaURL: mediaURLUploaded
+        });
+        return {
+          user: this.userData,
+          name: user.displayName,
+          mediaURL: mediaURLUploaded
+        };
+      } else {
+        throw new Error('Usuário não locazalizado após cadastro!');
+      }
+    }catch (error){
+      throw error;
+    }
+  }
+
+  login(email: string, password: string){
+    return this.auth.signInWithEmailAndPassword(email, password);
+  }
+
+  resetPassword(email: string){
+    return this.auth.sendPasswordResetEmail(email);
+  }
+
+  private async uploadImage(mediaURL: File, userId: string): Promise<string>{
+    try{
+      const storageRef = this.storage.ref(`users/${userId}/${mediaURL.name}`);
+      const uploadTask = await storageRef.put(mediaURL);
+      const downloadURL = await uploadTask.ref.getDownloadURL();
+      return downloadURL;
+    }catch (error){
+      console.error('Erro ao fazer upload da imagem:', error);
+      throw error;
+    }
+  }
 }

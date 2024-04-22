@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/models/services/auth/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,24 +11,43 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  email: string = '';
-  senha: string = '';
-  erroLogin: boolean = false;
   loginForm!: FormGroup;
 
   constructor(
-
     private formBuilder: FormBuilder, 
     private router: Router, 
-    private toastCtrl: ToastController
-
+    private toastCtrl: ToastController,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+  }
+
+  async login() {
+    const username = this.loginForm.get('username')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    try {
+      await this.authService.login(username, password);
+      this.router.navigate(['/home']);
+      this.presentToast('Login realizado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      this.presentToast('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
+    }
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
   goToRegisterPage() {
@@ -35,15 +56,5 @@ export class LoginPage implements OnInit {
   
   goToResetPassword() {
     this.router.navigate(['/reset-password']);
-  }
-
-  async confirmToast(position: 'top' | 'middle' | 'bottom') {
-    const toast = await this.toastCtrl.create({
-      message: 'Você entrou com sucesso!',
-      duration: 1500,
-      position: position,
-    });
-
-    await toast.present();
   }
 }

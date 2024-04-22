@@ -13,7 +13,7 @@ export class UserProfilePage implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private sanitizer: DomSanitizer) {
     this.profileForm = this.formBuilder.group({
-      name: ['', Validators.required] // Campo de nome agora é obrigatório
+      name: ['', Validators.required]
     });
   }
 

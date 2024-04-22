@@ -1,3 +1,5 @@
+
+
 <ion-header [translucent]="true">
   <div class="top-background">
     <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
@@ -5,45 +7,55 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="registerForm" class="form-container" >
+  <form [formGroup]="registerForm" class="form-container" (ngSubmit)="submitForm()">
+    
     <ion-item class="register-user-1">
       <ion-label position="floating">Nome de usuário</ion-label>
       <ion-input formControlName="username" required></ion-input>
     </ion-item>
-    <ion-text class="register-user-2" color="danger" *ngIf="registerForm
-    .get('username')?.errors && registerForm.get('username')?.touched">
+    <ion-text class="register-user-2" color="danger" *ngIf="registerForm.get('username')?.errors && registerForm.get('username')?.touched">
       O nome de usuário é obrigatório
     </ion-text>
+
     <ion-item class="register-email-1">
       <ion-label position="floating">E-mail</ion-label>
       <ion-input formControlName="email" type="email" required></ion-input>
     </ion-item>
-    <ion-text class="register-email-2" color="danger" *ngIf="registerForm
-    .get('email')?.errors && registerForm.get('email')?.touched">
+    <ion-text class="register-email-2" color="danger" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
       O e-mail é obrigatório
     </ion-text>
+
     <ion-item class="register-password-1">
       <ion-label position="floating">Senha</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="register-password-2" color="danger" *ngIf="registerForm
-    .get('password')?.errors && registerForm.get('password')?.touched">
+    <ion-text class="register-password-2" color="danger" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
       A senha é obrigatória
     </ion-text>
+
     <ion-item class="register-password-3">
       <ion-label position="floating">Confirmar senha</ion-label>
-      <ion-input formControlName="password" type="password" required></ion-input>
+      <ion-input formControlName="passwordConfirmation" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="register-password-4" color="danger" *ngIf="registerForm
-    .get('password')?.errors && registerForm.get('password')?.touched">
+    <ion-text class="register-password-4" color="danger" *ngIf="registerForm.get('passwordConfirmation')?.errors && registerForm.get('passwordConfirmation')?.touched">
       A confirmação da senha é obrigatória
     </ion-text>
+
+    <ion-item class="input-file">
+      <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
+      <input id="file-input" class="file-input" type="file" accept="image/*" (change)="uploadFile($event)" />
+
+    </ion-item>
+
     <ion-button type="submit" class="custom-button-1" expand="block" shape="round">
       REGISTRAR
     </ion-button>
     <div class="route-register">
       <ion-label>Já possui uma conta?</ion-label>
-      <a (click)="goToRegisterPage()"> Faça login aqui.</a>
+      <a (click)="goToLoginPage()"> Faça login aqui.</a>
     </div>
   </form>
 </ion-content>
+
+
+

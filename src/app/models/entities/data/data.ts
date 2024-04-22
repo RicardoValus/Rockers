@@ -1,7 +1,7 @@
 export class data {
     private _name!: string;
     private _email!: string;
-    private _downloadMedia!: any;
+    private _media!: any;
     private _id!: string;
     private _uid!: any;
     private _services!: string;
@@ -29,10 +29,10 @@ export class data {
     // ------
 
     public get downloadMedia(): any {
-        return this._downloadMedia;
+        return this._media;
     }
     public set downloadMedia(value: any) {
-        this._downloadMedia = value;
+        this._media = value;
     }
 
     // ------
