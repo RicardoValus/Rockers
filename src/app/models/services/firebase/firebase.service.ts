@@ -1,34 +1,38 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  barbersPath: string = 'barbers'
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage
+  ) { }
 
-  addBarber(name: string, avatarUrl: string) {
-    const barberId = this.firestore.createId();
-    const barberData = { barberName: name, barberAvatar: avatarUrl };
-
-    return this.firestore.collection('barbers').doc(barberId).set(barberData)
-      .then(() => {
-        return barberId;
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
-
-
+  addBarber(name: string, image: any) {
+    const file = image.item(0)
+    const uploadTask = this.uploadMedia(image, 'barberImages', file.name)
+    uploadTask?.then(async snapshot => {
+      const imageURL = await snapshot.ref.getDownloadURL()
+      return this.firestore.collection('barbers').add({barberName: name, barberImage: imageURL})
+    })
+}
   getBarbers() {
-    return this.firestore.collection('barbers').valueChanges();
+    return this.firestore.collection('barbers').snapshotChanges();
   }
 
-  removeBarber(barberId: string) {
-    return this.firestore.collection('barbers').doc(barberId).delete();
+  removeBarber(barberID: string) {
+    return this.firestore.collection(this.barbersPath).doc(barberID).delete();
   }
 
+  uploadMedia(image: any, PATH: string, fileName: any) {     
+    const file = image.item(0);     
+    const path = `${PATH}/${fileName}`;     
+    let task = this.storage.upload(path, file);     
+    return task;   
+  }
 }

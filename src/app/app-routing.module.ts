@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -39,17 +39,11 @@ const routes: Routes = [
     path: 'reset-password',
     loadChildren: () => import('./views/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
-  
-
-
-
-
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
 })

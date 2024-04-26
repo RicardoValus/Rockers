@@ -1,13 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
-
 
 interface Barber {
   id: string;
-  name: string;
-  avatar: string;
+  barberName: string;
+  barberAvatar: string;
 }
 
 @Component({
@@ -15,98 +15,63 @@ interface Barber {
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
 })
-export class AdminPage implements OnInit {
+export class AdminPage implements OnInit, OnDestroy{
   @Output() horarioSelecionado = new EventEmitter<string>();
 
   horarios: string[] = [];
   novoHorario: string = '';
   horarioSelecionadoValue: string = '';
-  barbers: Barber[] = [];
-
+  barbers: any;
   selectedBarber: Barber | null = null;
-
   showAddBarber: boolean = false;
   newBarberName: string = '';
   newBarberAvatar: string = '';
   showCalendar: boolean = false;
+  image: any;
+  barberID: string = ''
+  subscriptions: Subscription[] = []
 
   constructor(
-    private sanitizer: DomSanitizer,
     private firebaseService: FirebaseService,
-    private firestore: AngularFirestore
   ) { }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
+  }
+
   ngOnInit() {
-    this.loadBarbers();
-  }
-
-  ionViewWillEnter() {
-    this.loadBarbers();
-  }
-
-  loadBarbers() {
-    this.firebaseService.getBarbers().subscribe((res: any[]) => {
+    const barberSubscription = this.firebaseService.getBarbers().subscribe(res=>{
       this.barbers = res.map(barber => {
-        const id = barber.id;
-
-        return {
-          id: id,
-          name: barber.barberName,
-          avatar: barber.barberAvatar,
-        } as Barber;
-      });
-    });
+        return {id: barber.payload.doc.id, ...barber.payload.doc.data() as any} as any
+      })
+    })
+    this.subscriptions.push(barberSubscription)
   }
 
+  // ionViewWillEnter() {
 
-
+  // }
 
   toggleAddBarber() {
     this.showAddBarber = !this.showAddBarber;
   }
 
-  handleFileInput(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataURL = reader.result as string;
-      const base64Image = dataURL.split(',')[1];
-      this.newBarberAvatar = base64Image;
-    };
-    reader.readAsDataURL(file);
-  }
-
-
-
   async addBarber() {
-    if (this.newBarberName && this.newBarberAvatar) {
-      try {
-        const barberId = await this.firebaseService.addBarber(
-          this.newBarberName,
-          this.newBarberAvatar.toString()
-        );
-
-        this.barbers.push({
-          id: barberId,
-          name: this.newBarberName,
-          avatar: this.newBarberAvatar
-        });
-
-        this.newBarberName = '';
-        this.newBarberAvatar = '';
-        this.toggleAddBarber();
-      } catch (error) {
-        console.error('Erro ao adicionar barbeiro:', error);
-      }
-    }
+    this.firebaseService.addBarber(this.newBarberName, this.image);
   }
 
-
-  removeBarber() {
-
+  setBarberID(index: number){
+    this.barberID = this.barbers[index].id
+    console.log(this.barberID)
   }
 
-
+  removeBarber(){
+    this.firebaseService.removeBarber(this.barberID)
+  }
+  
+  uploadFile(image: any){     
+    this.image = image.files;   
+  }
 
   toggleCalendar() {
     setTimeout(() => {
@@ -122,8 +87,6 @@ export class AdminPage implements OnInit {
     const today = new Date();
     return today.toISOString();
   }
-
-
 
   selectBarber(barber: Barber) {
     this.selectedBarber = barber === this.selectedBarber ? null : barber;

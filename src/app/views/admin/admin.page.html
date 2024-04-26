@@ -16,11 +16,10 @@
       </ion-card-header>
       <ion-card-content>
         <div class="barbers-container">
-          <div *ngFor="let barber of barbers" class="barber-item" [class.selected-barber]="selectedBarber === barber"
+          <div (click)="setBarberID(i)" *ngFor="let barber of barbers; let i = index" class="barber-item" [class.selected-barber]="selectedBarber === barber"
             (click)="selectBarber(barber)">
-            <img [src]="'data:image/jpeg;base64,' + barber.avatar" alt="{{ barber.name }}" class="barber-avatar">
-
-            <p>{{ barber.name }}</p>
+            <img [src]="barber.barberImage" class="barber-avatar">
+            <p>{{ barber.barberName }}</p>
           </div>
 
         </div>
@@ -33,12 +32,9 @@
         <ion-item *ngIf="showAddBarber">
           <ion-label class="custom-label" position="floating">Nome do Barbeiro</ion-label>
           <ion-input class="custom-input" type="text" [(ngModel)]="newBarberName"></ion-input>
-          <input type="file" (change)="handleFileInput($event)" accept="image/*">
+          <input type="file" (change)="uploadFile($event.target)" accept="image/*">
           <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
         </ion-item>
-
-
-
       </ion-card-content>
     </ion-card>
   </div>
