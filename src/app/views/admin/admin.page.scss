@@ -45,9 +45,9 @@
 
 
 .barber-avatar {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
   object-fit: cover;
 }
 
@@ -74,7 +74,8 @@
 
 .card-barber,
 .card-calendar,
-.card-client {
+.card-client,
+.card-time {
   border: 2px solid #AEB7B3;
   border-radius: 20px;
 }

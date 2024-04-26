@@ -14,17 +14,19 @@
         <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let service of services">
           <ion-card [class.selected]="isSelected(service)" (click)="toggleService(service)" class="card">
             <ion-card-content class="card-content-1">
-              <ion-img [src]="getImagePath(service)" class="images"></ion-img>
+              <ion-img [src]="getImagePath(service.name)" class="images"></ion-img>
             </ion-card-content>
             <ion-card-content class="card-content-2">
-              {{ service }}
+              {{ service.name }}
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
     <div class="button-container">
-      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment">Confirmar</ion-button>
+      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment" [disabled]="selectedServices.length === 0">
+        Confirmar
+      </ion-button>
     </div>
   </div>
 </ion-content>

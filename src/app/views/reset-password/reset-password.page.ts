@@ -34,4 +34,8 @@ export class ResetPasswordPage implements OnInit {
         });
     }
   }
+
+  goToLoginPage() {
+    this.router.navigate(['/login']);
+  }
 }

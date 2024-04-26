@@ -18,7 +18,8 @@
         <div class="barbers-container">
           <div *ngFor="let barber of barbers" class="barber-item" [class.selected-barber]="selectedBarber === barber"
             (click)="selectBarber(barber)">
-            <img [src]="barber.avatar" alt="{{ barber.name }}" class="barber-avatar">
+            <img [src]="'data:image/jpeg;base64,' + barber.avatar" alt="{{ barber.name }}" class="barber-avatar">
+
             <p>{{ barber.name }}</p>
           </div>
 
@@ -42,18 +43,43 @@
     </ion-card>
   </div>
 
-  <div class="div-calendar">
+  <div>
     <ion-card class="card-calendar">
       <ion-card-header (click)="toggleCalendar()">
-        <ion-card-title>Calendário em construção</ion-card-title>
+        <ion-card-title>Datas</ion-card-title>
         <ion-card-subtitle></ion-card-subtitle>
       </ion-card-header>
       <ion-card-content *ngIf="showCalendar">
         <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
-          [min]="getMinDate()" [isDateEnabled]="isWeekday" (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()"
-          presentation="date">
+          [min]="getMinDate()" (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()" presentation="date">
         </ion-datetime>
       </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div>
+    <ion-card class="card-time">
+      <ion-item>
+        <ion-select #horarioSelect placeholder="Selecione seus horário" multiple="true"
+          (ionChange)="selecionarHorarios($event)">
+          <ion-select-option *ngFor="let option of horarioOptions" [value]="option.value">{{ option.label
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>Horários</ion-label>
+            <ion-button slot="end" color="danger" (click)="limparHorarios()">Limpar</ion-button>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item *ngFor="let horario of horarios; let i = index">
+              {{ horario }}
+              <ion-icon name="trash" slot="end" (click)="removerHorario(i)" color="danger"></ion-icon>
+            </ion-item>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-card>
   </div>
 

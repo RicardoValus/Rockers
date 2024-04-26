@@ -1,5 +1,3 @@
-
-
 <ion-header [translucent]="true">
   <div class="top-background">
     <ion-img src="assets/Logo.png" class="logo-img"></ion-img>
@@ -8,12 +6,13 @@
 
 <ion-content>
   <form [formGroup]="registerForm" class="form-container" (ngSubmit)="submitForm()">
-    
+
     <ion-item class="register-user-1">
       <ion-label position="floating">Nome de usuário</ion-label>
       <ion-input formControlName="username" required></ion-input>
     </ion-item>
-    <ion-text class="register-user-2" color="danger" *ngIf="registerForm.get('username')?.errors && registerForm.get('username')?.touched">
+    <ion-text class="register-user-2" color="danger"
+      *ngIf="registerForm.get('username')?.errors && registerForm.get('username')?.touched">
       O nome de usuário é obrigatório
     </ion-text>
 
@@ -21,7 +20,8 @@
       <ion-label position="floating">E-mail</ion-label>
       <ion-input formControlName="email" type="email" required></ion-input>
     </ion-item>
-    <ion-text class="register-email-2" color="danger" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
+    <ion-text class="register-email-2" color="danger"
+      *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
       O e-mail é obrigatório
     </ion-text>
 
@@ -29,7 +29,8 @@
       <ion-label position="floating">Senha</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="register-password-2" color="danger" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
+    <ion-text class="register-password-2" color="danger"
+      *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
       A senha é obrigatória
     </ion-text>
 
@@ -37,15 +38,27 @@
       <ion-label position="floating">Confirmar senha</ion-label>
       <ion-input formControlName="passwordConfirmation" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="register-password-4" color="danger" *ngIf="registerForm.get('passwordConfirmation')?.errors && registerForm.get('passwordConfirmation')?.touched">
+    <ion-text class="register-password-4" color="danger"
+      *ngIf="registerForm.get('passwordConfirmation')?.errors && registerForm.get('passwordConfirmation')?.touched">
       A confirmação da senha é obrigatória
     </ion-text>
 
     <ion-item class="input-file">
       <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
       <input id="file-input" class="file-input" type="file" accept="image/*" (change)="uploadFile($event)" />
-
     </ion-item>
+
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col>Teste</ion-col>
+        <ion-col>Teste</ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card>
+      <ion-card-header>Teste</ion-card-header>
+      <ion-card-content>Testando</ion-card-content>
+    </ion-card> -->
 
     <ion-button type="submit" class="custom-button-1" expand="block" shape="round">
       REGISTRAR
@@ -56,6 +69,3 @@
     </div>
   </form>
 </ion-content>
-
-
-
