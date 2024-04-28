@@ -16,8 +16,8 @@
       </ion-card-header>
       <ion-card-content>
         <div class="barbers-container">
-          <div (click)="setBarberID(i)" *ngFor="let barber of barbers; let i = index" class="barber-item" [class.selected-barber]="selectedBarber === barber"
-            (click)="selectBarber(barber)">
+          <div (click)="setBarberID(i)" *ngFor="let barber of barbers; let i = index" class="barber-item"
+            [class.selected-barber]="selectedBarber === barber" (click)="selectBarber(barber)">
             <img [src]="barber.barberImage" class="barber-avatar">
             <p>{{ barber.barberName }}</p>
           </div>
@@ -46,9 +46,14 @@
         <ion-card-subtitle></ion-card-subtitle>
       </ion-card-header>
       <ion-card-content *ngIf="showCalendar">
-        <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
-          [min]="getMinDate()" (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()" presentation="date">
-        </ion-datetime>
+        <ion-datetime presentation="date" hourCycle="h24" [isDateEnabled]="isDateEnabled"
+          [min]="getMinDate()"></ion-datetime>
+        <ion-item>
+          <ion-input type="date" [(ngModel)]="newDate" (ionChange)="onDateInputChange($event)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="addDateToDisabledArray()">Desabilitar data</ion-button>
+        </ion-item>
       </ion-card-content>
     </ion-card>
   </div>

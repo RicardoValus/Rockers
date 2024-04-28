@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
+import { IonDatetime } from '@ionic/angular';
 
 interface Barber {
   id: string;
@@ -15,21 +14,25 @@ interface Barber {
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
 })
-export class AdminPage implements OnInit, OnDestroy{
+export class AdminPage implements OnInit, OnDestroy {
   @Output() horarioSelecionado = new EventEmitter<string>();
 
-  horarios: string[] = [];
-  novoHorario: string = '';
-  horarioSelecionadoValue: string = '';
   barbers: any;
   selectedBarber: Barber | null = null;
   showAddBarber: boolean = false;
   newBarberName: string = '';
   newBarberAvatar: string = '';
-  showCalendar: boolean = false;
   image: any;
   barberID: string = ''
   subscriptions: Subscription[] = []
+
+  showCalendar: boolean = false;
+  disabledDatesArray: string[] = [];
+  newDate: string = '';
+
+  horarios: string[] = [];
+  novoHorario: string = '';
+  horarioSelecionadoValue: string = '';
 
   constructor(
     private firebaseService: FirebaseService,
@@ -40,47 +43,75 @@ export class AdminPage implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    const barberSubscription = this.firebaseService.getBarbers().subscribe(res=>{
+    const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
       this.barbers = res.map(barber => {
-        return {id: barber.payload.doc.id, ...barber.payload.doc.data() as any} as any
+        return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
       })
     })
     this.subscriptions.push(barberSubscription)
   }
 
-  // ionViewWillEnter() {
-
-  // }
-
+  //barbeiros
   toggleAddBarber() {
     this.showAddBarber = !this.showAddBarber;
   }
 
   async addBarber() {
     this.firebaseService.addBarber(this.newBarberName, this.image);
+    setTimeout(() => { //recarregar pagina depois de 2 segundos
+      location.reload();
+    }, 2000)
   }
 
-  setBarberID(index: number){
+  setBarberID(index: number) {
     this.barberID = this.barbers[index].id
     console.log(this.barberID)
   }
 
-  removeBarber(){
-    this.firebaseService.removeBarber(this.barberID)
-  }
-  
-  uploadFile(image: any){     
-    this.image = image.files;   
+  selectBarber(barber: Barber) {
+    this.selectedBarber = barber === this.selectedBarber ? null : barber;
   }
 
+  removeBarber() {
+    this.firebaseService.removeBarber(this.barberID)
+  }
+
+  uploadFile(image: any) {
+    this.image = image.files;
+  }
+
+  //calendario
   toggleCalendar() {
     setTimeout(() => {
       this.showCalendar = !this.showCalendar;
     });
   }
 
-  closeCalendar() {
-    this.showCalendar = false;
+  isDateEnabled = (dateString: string) => {
+    const date = new Date(dateString);
+    const formattedDate = this.formatDateUTC(date);
+
+    return !this.disabledDatesArray.includes(formattedDate);
+  };
+
+  private formatDateUTC(date: Date): string {
+    const year = date.getUTCFullYear();
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  onDateInputChange(event: any) {
+    this.newDate = this.formatDateUTC(new Date(event.target.value));
+  }
+
+  addDateToDisabledArray() {
+    if (!this.disabledDatesArray.includes(this.newDate)) {
+      this.disabledDatesArray.push(this.newDate);
+      console.log(this.disabledDatesArray)
+      this.newDate = '';
+    }
   }
 
   getMinDate(): string {
@@ -88,10 +119,8 @@ export class AdminPage implements OnInit, OnDestroy{
     return today.toISOString();
   }
 
-  selectBarber(barber: Barber) {
-    this.selectedBarber = barber === this.selectedBarber ? null : barber;
-  }
 
+  //horários
   selecionarHorarios(event: any) {
     const horariosSelecionados = event.detail.value;
     this.horarios = horariosSelecionados;
