@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
 // import { CalendarModalPage } from 'src/app/calendar-modal/calendar-modal.page';
 // import { ModalController } from '@ionic/angular';
+
+interface Barber {
+  id: string;
+  barberName: string;
+  barberAvatar: string;
+}
 
 @Component({
   selector: 'app-appointment',
@@ -12,10 +20,16 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class AppointmentPage implements OnInit {
 
   selectedBarber: string | null = null;
-  barbers: string[] = ['Barber 1', 'Barber 2'];
+  barbers: any
   // , 'Barber 3', 'Barber 4'
+  newBarberName: string = '';
+  subscriptions: Subscription[] = []
+  barberID: string = ''
+  image: any;
+
   showCalendar: boolean = false;
   selectedDate!: string;
+
   showTime: boolean = false;
   selectedTime: string | null = null;
   hourValues: string[] = [];
@@ -23,10 +37,17 @@ export class AppointmentPage implements OnInit {
   constructor(
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private firebaseService: FirebaseService
   ) { }
 
   ngOnInit() {
+    const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
+      this.barbers = res.map(barber => {
+        return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
+      })
+    })
+    this.subscriptions.push(barberSubscription)
     this.generateHourValues();
   }
 
@@ -38,23 +59,27 @@ export class AppointmentPage implements OnInit {
     }
   }
 
+  uploadFile(image: any) {
+    this.image = image.files;
+  }
+
   isSelected(barber: string): boolean {
     return this.selectedBarber === barber;
   }
 
-  getImagePath(barber: string): string {
-    if (barber === 'Barber 1') {
-      return 'assets/manoguaxi.jpeg';
-    } else if (barber === 'Barber 2') {
-      return 'assets/manoguaxi.jpeg';
-      // } else if (barber === 'Barber 3') {
-      //   return 'assets/manoguaxi.jpeg';
-      // } else if (barber === 'Barber 4') {
-      //   return 'assets/manoguaxi.jpeg';
-    } else {
-      return '';
-    }
-  }
+  // getImagePath(barber: string): string {
+  //   if (barber === 'Barber 1') {
+  //     return 'assets/manoguaxi.jpeg';
+  //   } else if (barber === 'Barber 2') {
+  //     return 'assets/manoguaxi.jpeg';
+  //     // } else if (barber === 'Barber 3') {
+  //     //   return 'assets/manoguaxi.jpeg';
+  //     // } else if (barber === 'Barber 4') {
+  //     //   return 'assets/manoguaxi.jpeg';
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   toggleCalendar() {
     setTimeout(() => {
@@ -99,7 +124,6 @@ export class AppointmentPage implements OnInit {
     }
     this.showTime = !this.showTime;
   }
-  
 
   closeTime() {
     this.showTime = false;
@@ -110,7 +134,6 @@ export class AppointmentPage implements OnInit {
     this.showTime = false;
   }
   
-
   getFormattedTime(): string {
     if (!this.selectedTime) return '';
 
@@ -135,7 +158,6 @@ export class AppointmentPage implements OnInit {
   
     return scheduledAppointments.includes(hour);
   }
-
 
     async confirmToast(position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastCtrl.create({

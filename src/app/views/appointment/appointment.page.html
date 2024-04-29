@@ -5,17 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-
-
   <div class="body-container">
-
     <div class="title-container">
       <h1 class="title">Agendamento</h1>
     </div>
-
     <div>
-
       <div class="div-grid">
         <ion-card class="card-barber">
           <ion-grid>
@@ -31,10 +25,10 @@
                     <ion-item-group>
                       <ion-item class="item-grid">
                         <ion-avatar slot="start">
-                          <img [src]="getImagePath(barber)">
+                          <img [src]="barber.barberImage">
                         </ion-avatar>
                         <ion-label>
-                          <h2>{{ barber }}</h2>
+                          <h2>{{ barber.barberName }}</h2>
                         </ion-label>
                       </ion-item>
                     </ion-item-group>
@@ -46,9 +40,6 @@
         </ion-card>
       </div>
     </div>
-
-
-
 
     <div class="div-calendar">
       <ion-card class="card-calendar">
@@ -83,7 +74,6 @@
         <ion-card-header>
           <ion-card-title>Meus agendamentos</ion-card-title>
         </ion-card-header>
-
         <ion-card-content>
           <ion-list>
             <ion-item>
@@ -93,7 +83,6 @@
                 <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-item>
-
             <ion-item>
               <ion-icon slot="start" name="checkbox-outline"></ion-icon>
               <ion-label>Teste de agendamento</ion-label>
@@ -105,16 +94,10 @@
         </ion-card-content>
       </ion-card>
     </div>
-
     <div class="button-container">
       <ion-button class="agend-button" expand="block" shape="round" (click)="confirmToast('top')">Agendar</ion-button>
     </div>
-
-
-
   </div>
-
-
 </ion-content>
 
 <ion-footer class="div-footer">
