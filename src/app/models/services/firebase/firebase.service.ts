@@ -18,9 +18,9 @@ export class FirebaseService {
     const uploadTask = this.uploadMedia(image, 'barberImages', file.name)
     uploadTask?.then(async snapshot => {
       const imageURL = await snapshot.ref.getDownloadURL()
-      return this.firestore.collection('barbers').add({barberName: name, barberImage: imageURL})
+      return this.firestore.collection('barbers').add({ barberName: name, barberImage: imageURL })
     })
-}
+  }
   getBarbers() {
     return this.firestore.collection('barbers').snapshotChanges();
   }
@@ -29,10 +29,18 @@ export class FirebaseService {
     return this.firestore.collection(this.barbersPath).doc(barberID).delete();
   }
 
-  uploadMedia(image: any, PATH: string, fileName: any) {     
-    const file = image.item(0);     
-    const path = `${PATH}/${fileName}`;     
-    let task = this.storage.upload(path, file);     
-    return task;   
+  uploadMedia(image: any, PATH: string, fileName: any) {
+    const file = image.item(0);
+    const path = `${PATH}/${fileName}`;
+    let task = this.storage.upload(path, file);
+    return task;
   }
+
+  addDate(date: string) {
+    return this.firestore.collection('dates').add({ date });
+  }
+
+  // getDate() {
+  //   return this.firestore.collection('dates').snapshotChanges();
+  // }
 }

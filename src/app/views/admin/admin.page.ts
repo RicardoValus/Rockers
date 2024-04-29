@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
-import { IonDatetime } from '@ionic/angular';
 
 interface Barber {
   id: string;
@@ -29,6 +28,8 @@ export class AdminPage implements OnInit, OnDestroy {
   showCalendar: boolean = false;
   disabledDatesArray: string[] = [];
   newDate: string = '';
+  newdisabledDate: string = ''
+  disabledDates: any[] = [];
 
   horarios: string[] = [];
   novoHorario: string = '';
@@ -109,8 +110,9 @@ export class AdminPage implements OnInit, OnDestroy {
   addDateToDisabledArray() {
     if (!this.disabledDatesArray.includes(this.newDate)) {
       this.disabledDatesArray.push(this.newDate);
-      console.log(this.disabledDatesArray)
       this.newDate = '';
+      this.newdisabledDate = this.formatDateUTC(new Date());
+      this.firebaseService.addDate(this.newdisabledDate);
     }
   }
 
@@ -119,13 +121,12 @@ export class AdminPage implements OnInit, OnDestroy {
     return today.toISOString();
   }
 
-
   //horários
-  selecionarHorarios(event: any) {
+  selectTime(event: any) {
     const horariosSelecionados = event.detail.value;
     this.horarios = horariosSelecionados;
   }
-  removerHorario(index: number) {
+  removeTime(index: number) {
     this.horarios.splice(index, 1);
   }
 
