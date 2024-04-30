@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
 
@@ -37,6 +39,9 @@ export class AdminPage implements OnInit, OnDestroy {
 
   constructor(
     private firebaseService: FirebaseService,
+    private alertCtrl: AlertController,
+    private router: Router,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnDestroy(): void {
@@ -177,4 +182,36 @@ export class AdminPage implements OnInit, OnDestroy {
     { value: '17:45', label: '17:45' },
     { value: '18:00', label: '18:00' }
   ];
+
+  async exitAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Deseja sair da sua conta?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          cssClass: 'alert-button-confirm',
+          handler: () => {
+            this.exitToast();
+            this.router.navigate(['/login']);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async exitToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Você saiu com sucesso!',
+      duration: 1500,
+      position: 'top',
+    });
+    toast.present();
+  }
 }

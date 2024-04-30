@@ -31,22 +31,25 @@
   </div>
 </ion-content>
 
-<ion-footer class="div-footer">
-  <div class="div-buttons">
-    <div>
-      <ion-button fill="clear" size="large" (click)="exitAlert()">
-        <ion-icon slot="icon-only" name="exit" color="dark"></ion-icon>
-      </ion-button>
-    </div>
-    <div>
-      <ion-button fill="clear" size="large" routerLink="/home">
-        <ion-icon slot="icon-only" name="home" color="dark"></ion-icon>
-      </ion-button>
-    </div>
-    <div>
-      <ion-button fill="clear" size="large" routerLink="/appointment">
-        <ion-icon slot="icon-only" name="calendar" color="dark"></ion-icon>
-      </ion-button>
-    </div>
-  </div>
+<ion-footer >
+  <ion-tab-bar color="primary">
+    <ion-tab-button (click)="exitAlert()">
+      <ion-icon name="exit" color="dark"></ion-icon>
+      <ion-label>
+        Sair
+      </ion-label>
+    </ion-tab-button>
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home" color="dark"></ion-icon>
+      <ion-label>
+        Serviços
+      </ion-label>
+    </ion-tab-button>
+    <ion-tab-button routerLink="/appointment">
+      <ion-icon name="calendar" color="dark"></ion-icon>
+      <ion-label>
+        Agendamento
+      </ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
 </ion-footer>
