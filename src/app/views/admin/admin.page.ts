@@ -59,7 +59,6 @@ export class AdminPage implements OnInit, OnDestroy {
         return { id: date.payload.doc.id, ...date.payload.doc.data() as any } as any
       })
     })
-    console.log('aaaaaaa', this.dates)
     this.subscriptions.push(barberSubscription, dateSubscription);
   }
 
@@ -100,18 +99,29 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async addDate(date: string) {
-    this.firebaseService.addDate(date).then(() => {
-      console.log('deu boa');
-    }).catch((error) => {
-      console.log('deu ruim', error);
-    });
+    try {
+      await this.firebaseService.addDate(date);
+      const toast = await this.toastCtrl.create({
+        message: 'Data desativada com sucesso!',
+        duration: 1500,
+        position: 'top'
+      });
+      await toast.present();
+    } catch (error) {
+      const toast = await this.toastCtrl.create({
+        message: 'Esta data já foi desativada.',
+        duration: 1500,
+        position: 'top',
+        // color: 'danger'
+      });
+      await toast.present();
+    }
   }
 
   deleteDate(dateId: string) {
     this.firebaseService.removeDate(dateId);
     console.log('removido')
   }
-
 
   //horários
   selectTime(event: any) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { first, from, map, mergeMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,16 +37,32 @@ export class FirebaseService {
     return task;
   }
 
-  addDate(date: string) {
-    return this.firestore.collection('dates').add({ date });
+  addDate(date: string): Promise<void> {
+    return this.firestore
+      .collection('dates', (ref) => ref.where('date', '==', date))
+      .get()
+      .pipe(
+        first(),
+        mergeMap((snapshot) => {
+          if (snapshot.empty) {
+            return from(this.firestore.collection('dates').add({ date }));
+          } else {
+            throw new Error('essa data já existe');
+          }
+        })
+      )
+      .toPromise()
+      .then(() => {
+        return;
+      });
   }
 
   getDates() {
     return this.firestore.collection('dates').snapshotChanges();
   }
 
-  removeDate(dateId: string){
+  removeDate(dateId: string) {
     return this.firestore.collection('dates').doc(dateId).delete();
   }
-  
+
 }
