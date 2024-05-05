@@ -31,7 +31,11 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": [
               "node_modules/swiper/swiper.min.js"
             ]
@@ -113,7 +117,11 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {

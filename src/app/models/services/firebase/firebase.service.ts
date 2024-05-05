@@ -40,7 +40,12 @@ export class FirebaseService {
     return this.firestore.collection('dates').add({ date });
   }
 
-  // getDate() {
-  //   return this.firestore.collection('dates').snapshotChanges();
-  // }
+  getDates() {
+    return this.firestore.collection('dates').snapshotChanges();
+  }
+
+  removeDate(dateId: string){
+    return this.firestore.collection('dates').doc(dateId).delete();
+  }
+  
 }

@@ -28,10 +28,9 @@ export class AdminPage implements OnInit, OnDestroy {
   subscriptions: Subscription[] = []
 
   showCalendar: boolean = false;
-  disabledDatesArray: string[] = [];
-  newDate: string = '';
-  newdisabledDate: string = ''
-  disabledDates: any[] = [];
+  dates: any;
+
+
 
   horarios: string[] = [];
   novoHorario: string = '';
@@ -54,7 +53,14 @@ export class AdminPage implements OnInit, OnDestroy {
         return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
       })
     })
-    this.subscriptions.push(barberSubscription)
+
+    const dateSubscription = this.firebaseService.getDates().subscribe(res => {
+      this.dates = res.map(date => {
+        return { id: date.payload.doc.id, ...date.payload.doc.data() as any } as any
+      })
+    })
+    console.log('aaaaaaa', this.dates)
+    this.subscriptions.push(barberSubscription, dateSubscription);
   }
 
   //barbeiros
@@ -64,9 +70,9 @@ export class AdminPage implements OnInit, OnDestroy {
 
   async addBarber() {
     this.firebaseService.addBarber(this.newBarberName, this.image);
-    setTimeout(() => { //recarregar pagina depois de 2 segundos
-      location.reload();
-    }, 2000)
+    // setTimeout(() => { //recarregar pagina depois de 2 segundos
+    // location.reload();
+    // }, 2000)
   }
 
   setBarberID(index: number) {
@@ -93,38 +99,19 @@ export class AdminPage implements OnInit, OnDestroy {
     });
   }
 
-  isDateEnabled = (dateString: string) => {
-    const date = new Date(dateString);
-    const formattedDate = this.formatDateUTC(date);
-
-    return !this.disabledDatesArray.includes(formattedDate);
-  };
-
-  private formatDateUTC(date: Date): string {
-    const year = date.getUTCFullYear();
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-    const day = date.getUTCDate().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
+  async addDate(date: string) {
+    this.firebaseService.addDate(date).then(() => {
+      console.log('deu boa');
+    }).catch((error) => {
+      console.log('deu ruim', error);
+    });
   }
 
-  onDateInputChange(event: any) {
-    this.newDate = this.formatDateUTC(new Date(event.target.value));
+  deleteDate(dateId: string) {
+    this.firebaseService.removeDate(dateId);
+    console.log('removido')
   }
 
-  addDateToDisabledArray() {
-    if (!this.disabledDatesArray.includes(this.newDate)) {
-      this.disabledDatesArray.push(this.newDate);
-      this.newDate = '';
-      this.newdisabledDate = this.formatDateUTC(new Date());
-      this.firebaseService.addDate(this.newdisabledDate);
-    }
-  }
-
-  getMinDate(): string {
-    const today = new Date();
-    return today.toISOString();
-  }
 
   //horários
   selectTime(event: any) {

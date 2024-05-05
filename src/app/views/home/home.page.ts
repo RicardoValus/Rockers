@@ -15,6 +15,7 @@ export class HomePage {
     { name: 'Lavagem de cabelo', uid: 'service3' },
     { name: 'Corte de cabelo', uid: 'service4' }
   ];
+JSON: any;
 
   constructor(
     private alertCtrl: AlertController,

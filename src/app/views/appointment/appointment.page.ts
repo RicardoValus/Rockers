@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
@@ -33,13 +34,22 @@ export class AppointmentPage implements OnInit {
   showTime: boolean = false;
   selectedTime: string | null = null;
   hourValues: string[] = [];
+  homePageSelectedServices: any;
 
   constructor(
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private router: Router,
-    private firebaseService: FirebaseService
-  ) { }
+    private firebaseService: FirebaseService,
+    private afs: AngularFirestore,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params && params['selectedServices']) {
+        this.homePageSelectedServices = JSON.parse(params['selectedServices']);
+      }
+    });
+  }
 
   ngOnInit() {
     const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
@@ -159,14 +169,40 @@ export class AppointmentPage implements OnInit {
     return scheduledAppointments.includes(hour);
   }
 
-    async confirmToast(position: 'top' | 'middle' | 'bottom') {
-    const toast = await this.toastCtrl.create({
-      message: 'Agendamento realizado com sucesso!',
-      duration: 1500,
-      position: position,
-    });
-
-    await toast.present();
+  async confirmToast(position: 'top' | 'middle' | 'bottom') {
+    if (!this.selectedBarber || !this.selectedDate || !this.selectedTime) {
+      const toast = await this.toastCtrl.create({
+        message: 'Por favor, selecione o barbeiro, data e hora antes de agendar.',
+        duration: 2000,
+        position: position,
+      });
+      await toast.present();
+      return;
+    }
+  
+    const appointmentData = {
+      barber: this.selectedBarber,
+      date: this.selectedDate,
+      time: this.selectedTime,
+      services: this.homePageSelectedServices.map((service: any) => service.name),
+    };
+  
+    try {
+      await this.afs.collection('appointments').add(appointmentData);
+      const toast = await this.toastCtrl.create({
+        message: 'Agendamento realizado com sucesso!',
+        duration: 1500,
+        position: position,
+      });
+      await toast.present();
+    } catch (error) {
+      const toast = await this.toastCtrl.create({
+        message: 'Erro ao agendar: ',
+        duration: 2000,
+        position: position,
+      });
+      await toast.present();
+    }
   }
 
   async cancelAppointmentAlert() {
