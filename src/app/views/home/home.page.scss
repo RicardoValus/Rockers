@@ -15,19 +15,26 @@
   height: auto;
 }
 
-.body-container {
-  max-width: 360px;
-  margin: auto;
-}
+// .body-container {
+//   max-width: 360px;
+//   margin: auto;
+// }
 
 .title-container {
   display: flex;
   justify-content: center;
 }
 
-.title {
+.title-1 {
   display: flex;
-  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  // border-bottom: 1px solid #AEB7B3;
+}
+
+.title-2 {
+  display: flex;
+  text-align: center;
   // border-bottom: 1px solid #AEB7B3;
 }
 
@@ -50,7 +57,6 @@
 }
 
 .services-grid {
-
   max-width: 360px;
   margin: auto;
 }
@@ -68,11 +74,6 @@
   margin: 0 auto;
 }
 
-.card {
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
-}
 
 .card-content-1 {
   width: 100%;
@@ -100,4 +101,71 @@
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+
+
+
+
+
+.item-grid {
+  --background: transparent;
+  --border-style: none;
+}
+
+.div-grid {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+.div-calendar,
+.div-time {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+.card-barber,
+.card-appointment,
+.card-calendar,
+.card-time {
+  // --background: #AEB7B3;
+  //  height: 50px;
+  border: 2px solid #AEB7B3;
+  border-radius: 20px;
+}
+
+.div-my-appointment {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+// ion-item[slot="header"] {
+//   --background: #AEB7B3;
+// }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.agend-button {
+  width: 75%;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.teste1,
+.teste2,
+.teste3 {
+  background-color: red;
+}
+
+h2 {
+  text-align: center;
 }

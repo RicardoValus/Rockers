@@ -7,12 +7,12 @@
 <ion-content>
   <div body-container>
     <div class="title-container">
-      <h1 class="title">Serviços</h1>
+      <ion-title class="title-1">Serviços</ion-title>
     </div>
     <ion-grid class="services-grid">
       <ion-row>
         <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let service of services">
-          <ion-card [class.selected]="isSelected(service)" (click)="toggleService(service)" class="card">
+          <ion-card [class.selected]="isSelectedService(service)" (click)="toggleService(service)" class="card">
             <ion-card-content class="card-content-1">
               <ion-img [src]="getImagePath(service.name)" class="images"></ion-img>
             </ion-card-content>
@@ -23,15 +23,114 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <div class="body-container">
+      <div class="title-container">
+        <ion-title class="title-1">Agendamento</ion-title>
+      </div>
+      <div>
+        <div class="div-grid">
+          <ion-card class="card-barber">
+            <ion-grid>
+              <ion-row>
+                <ion-title class="title-2">Selecione o Barbeiro</ion-title>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let barber of barbers">
+                  <div (click)="toggleBarber(barber)" [class.selected]="isSelected(barber)">
+                    <ion-list>
+                      <ion-item-group>
+                        <ion-item class="item-grid">
+                          <ion-avatar slot="start">
+                            <img [src]="barber.barberImage">
+                          </ion-avatar>
+                          <ion-label>
+                            <h2>{{ barber.barberName }}</h2>
+                          </ion-label>
+                        </ion-item>
+                      </ion-item-group>
+                    </ion-list>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </div>
+      </div>
+
+      <div class="div-calendar">
+        <ion-card class="card-calendar">
+          <ion-card-header (click)="toggleCalendar()">
+            <ion-title class="title-2">Data</ion-title>
+            <ion-card-subtitle *ngIf="selectedDate">{{ getFormattedDate() }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content *ngIf="showCalendar">
+            <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar"
+              cancelText="Fechar" [min]="getMinDate()" [isDateEnabled]="isWeekday" [(ngModel)]="selectedDate"
+              (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()" presentation="date">
+            </ion-datetime>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- <div class="div-time">
+        <ion-card class="card-time">
+          <ion-card-header (click)="toggleTime()">
+            <ion-card-title>Horários</ion-card-title>
+            <ion-card-subtitle *ngIf="selectedTime">{{ getFormattedTime() }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content *ngIf="showTime">
+            <ion-datetime presentation="time" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
+              [(ngModel)]="selectedTime" (ionCancel)="closeTime()" (ionDone)="closeTime()"></ion-datetime>
+          </ion-card-content>
+        </ion-card>
+      </div> -->
+
+      <div class="div-my-appointment">
+        <ion-card class="card-appointment">
+          <ion-card-header>
+            <ion-title class="title-2">Meus agendamentos</ion-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+                <ion-label>Agendado para 03/06/2024 às 18:00 com Leo</ion-label>
+                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-item>
+              <ion-item>
+                <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+                <ion-label>Teste de agendamento</ion-label>
+                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <!-- <div class="button-container">
+        <ion-button class="agend-button" expand="block" shape="round" (click)="confirmToast('top')">Agendar</ion-button>
+      </div> -->
+    </div>
+
+
+
+
+
+
     <div class="button-container">
-      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment" [disabled]="selectedServices.length === 0">
+      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment"
+        [disabled]="selectedServices.length === 0">
         Confirmar
       </ion-button>
     </div>
   </div>
 </ion-content>
 
-<ion-footer >
+<ion-footer>
   <ion-tab-bar color="primary">
     <ion-tab-button (click)="exitAlert()">
       <ion-icon name="exit" color="dark"></ion-icon>
@@ -45,11 +144,11 @@
         Serviços
       </ion-label>
     </ion-tab-button>
-    <ion-tab-button routerLink="/appointment">
+    <!-- <ion-tab-button routerLink="/appointment">
       <ion-icon name="calendar" color="dark"></ion-icon>
       <ion-label>
         Agendamento
       </ion-label>
-    </ion-tab-button>
+    </ion-tab-button> -->
   </ion-tab-bar>
 </ion-footer>
