@@ -1,5 +1,6 @@
 .selected {
   border: 2px solid #2dd36f;
+  border-radius: 10px;
 }
 
 .top-background {
@@ -35,6 +36,7 @@
 .title-2 {
   display: flex;
   text-align: center;
+  padding: 8px;
   // border-bottom: 1px solid #AEB7B3;
 }
 
@@ -107,6 +109,10 @@
 
 
 
+
+.barber-name{
+  padding-top: 12px;
+}
 
 .item-grid {
   --background: transparent;

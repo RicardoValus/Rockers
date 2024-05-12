@@ -51,7 +51,7 @@
           <ion-item slot="header" color="light">
             <ion-label>Datas Desativadas</ion-label>
           </ion-item>
-          <div class="ion-padding" slot="content">
+          <div slot="content">
             <ion-item *ngFor="let date of dates; let i = index">
               {{ date.date }}
               <ion-icon name="trash" slot="end" color="danger" (click)="deleteDate(date.id)"></ion-icon>
@@ -60,8 +60,6 @@
         </ion-accordion>
       </ion-accordion-group>
     </ion-card>
-
-
   </div>
 
   <div>

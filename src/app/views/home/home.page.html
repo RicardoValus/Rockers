@@ -44,7 +44,7 @@
                           <ion-avatar slot="start">
                             <img [src]="barber.barberImage">
                           </ion-avatar>
-                          <ion-label>
+                          <ion-label class="barber-name">
                             <h2>{{ barber.barberName }}</h2>
                           </ion-label>
                         </ion-item>
@@ -58,33 +58,32 @@
         </div>
       </div>
 
-      <div class="div-calendar">
+      <div class="div-grid">
         <ion-card class="card-calendar">
-          <ion-card-header (click)="toggleCalendar()">
-            <ion-title class="title-2">Data</ion-title>
-            <ion-card-subtitle *ngIf="selectedDate">{{ getFormattedDate() }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content *ngIf="showCalendar">
-            <ion-datetime display-format="DD/MM/YYYY" [showDefaultButtons]="true" doneText="Selecionar"
-              cancelText="Fechar" [min]="getMinDate()" [isDateEnabled]="isWeekday" [(ngModel)]="selectedDate"
-              (ionCancel)="closeCalendar()" (ionDone)="closeCalendar()" presentation="date">
-            </ion-datetime>
-          </ion-card-content>
+          <ion-title class="title-2">Datas</ion-title>
+          <ion-item>
+            <ion-input type="date" #dateInput></ion-input>
+          </ion-item>
         </ion-card>
       </div>
 
-      <!-- <div class="div-time">
+
+
+
+      <div class="div-time">
         <ion-card class="card-time">
-          <ion-card-header (click)="toggleTime()">
-            <ion-card-title>Horários</ion-card-title>
-            <ion-card-subtitle *ngIf="selectedTime">{{ getFormattedTime() }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content *ngIf="showTime">
-            <ion-datetime presentation="time" [showDefaultButtons]="true" doneText="Selecionar" cancelText="Fechar"
-              [(ngModel)]="selectedTime" (ionCancel)="closeTime()" (ionDone)="closeTime()"></ion-datetime>
-          </ion-card-content>
+          <ion-title class="title-2">Horários</ion-title>
+          <ion-list>
+            <ion-radio-group>
+              <ion-list>
+                <ion-item>
+                  <ion-radio value="radio" justify="space-between">teste</ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-radio-group>
+          </ion-list>
         </ion-card>
-      </div> -->
+      </div>
 
       <div class="div-my-appointment">
         <ion-card class="card-appointment">

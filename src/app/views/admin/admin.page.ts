@@ -136,15 +136,9 @@ export class AdminPage implements OnInit, OnDestroy {
     await this.firebaseService.addTime(timesSelected);
   }
 
-
-
-
   removeTime(timeId: string) {
     this.firebaseService.removeTime(timeId);
   }
-
-
-
 
   timeOptions = [
     { value: '08:00', label: '08:00' },
