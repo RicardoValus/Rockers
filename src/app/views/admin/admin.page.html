@@ -69,10 +69,9 @@
       <ion-item>
         <ion-select #horarioSelect placeholder="Selecione seus horário" multiple="true" (ionChange)="selectTime($event)"
           slot="start">
-          <ion-select-option *ngFor="let option of horarioOptions" [value]="option.value">{{ option.label
+          <ion-select-option *ngFor="let option of timeOptions" [value]="option.value">{{ option.label
             }}</ion-select-option>
         </ion-select>
-        <ion-button slot="end" color="danger" (click)="limparHorarios()">Limpar</ion-button>
       </ion-item>
       <ion-accordion-group>
         <ion-accordion value="first">
@@ -80,9 +79,9 @@
             <ion-label>Horários de Trabalho</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <ion-item *ngFor="let horario of horarios; let i = index">
-              {{ horario }}
-              <ion-icon name="trash" slot="end" (click)="removeTime(i)" color="danger"></ion-icon>
+            <ion-item *ngFor="let time of times">
+              {{ time.time }}
+              <ion-icon name="trash" slot="end" (click)="removeTime(time.id)" color="danger"></ion-icon>
             </ion-item>
           </div>
         </ion-accordion>

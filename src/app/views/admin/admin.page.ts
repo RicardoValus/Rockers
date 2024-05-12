@@ -16,7 +16,7 @@ interface Barber {
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit, OnDestroy {
-  @Output() horarioSelecionado = new EventEmitter<string>();
+  @Output() timeSelected = new EventEmitter<string>();
 
   barbers: any;
   selectedBarber: Barber | null = null;
@@ -30,11 +30,10 @@ export class AdminPage implements OnInit, OnDestroy {
   showCalendar: boolean = false;
   dates: any;
 
-
-
-  horarios: string[] = [];
-  novoHorario: string = '';
-  horarioSelecionadoValue: string = '';
+  // times: string[] = [];
+  times: any
+  newTime: string = '';
+  timeSelectedValue: string = '';
 
   constructor(
     private firebaseService: FirebaseService,
@@ -51,15 +50,22 @@ export class AdminPage implements OnInit, OnDestroy {
     const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
       this.barbers = res.map(barber => {
         return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
-      })
-    })
+      });
+    });
 
     const dateSubscription = this.firebaseService.getDates().subscribe(res => {
       this.dates = res.map(date => {
         return { id: date.payload.doc.id, ...date.payload.doc.data() as any } as any
-      })
-    })
-    this.subscriptions.push(barberSubscription, dateSubscription);
+      });
+    });
+
+    const timeSubscription = this.firebaseService.getTimes().subscribe(res => {
+      this.times = res.map(time => {
+        return { id: time.payload.doc.id, ...time.payload.doc.data() as any } as any
+      });
+    });
+
+    this.subscriptions.push(barberSubscription, dateSubscription, timeSubscription);
   }
 
   //barbeiros
@@ -124,19 +130,23 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   //horários
-  selectTime(event: any) {
-    const horariosSelecionados = event.detail.value;
-    this.horarios = horariosSelecionados;
-  }
-  removeTime(index: number) {
-    this.horarios.splice(index, 1);
+  async selectTime(event: any) {
+    const timesSelected = event.detail.value;
+    // this.horarios = horariosSelecionados;
+    await this.firebaseService.addTime(timesSelected);
   }
 
-  limparHorarios() {
-    this.horarios = [];
+
+
+
+  removeTime(timeId: string) {
+    this.firebaseService.removeTime(timeId);
   }
 
-  horarioOptions = [
+
+
+
+  timeOptions = [
     { value: '08:00', label: '08:00' },
     { value: '08:15', label: '08:15' },
     { value: '08:30', label: '08:30' },

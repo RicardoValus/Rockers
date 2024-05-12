@@ -22,6 +22,7 @@ export class FirebaseService {
       return this.firestore.collection('barbers').add({ barberName: name, barberImage: imageURL })
     })
   }
+
   getBarbers() {
     return this.firestore.collection('barbers').snapshotChanges();
   }
@@ -64,5 +65,24 @@ export class FirebaseService {
   removeDate(dateId: string) {
     return this.firestore.collection('dates').doc(dateId).delete();
   }
+
+  addTime(times: string[]) {
+    const promises = times.map(time => {
+      const id = this.firestore.createId(); // Gera um identificador único
+      return this.firestore.collection('times').doc(id).set({ time });
+    });
+    return Promise.all(promises);
+  }
+
+  getTimes() {
+    return this.firestore.collection('times').snapshotChanges();
+  }
+
+//...
+
+removeTime(timeId: string) {
+  return this.firestore.collection('times').doc(timeId).delete();
+}
+
 
 }
