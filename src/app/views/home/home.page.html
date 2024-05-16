@@ -62,26 +62,44 @@
         <ion-card class="card-calendar">
           <ion-title class="title-2">Datas</ion-title>
           <ion-item>
-            <ion-input type="date" #dateInput></ion-input>
+            <ion-datetime-button datetime="datetime" slot="start"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+
+            <ion-button slot="end">Selecionar</ion-button>
           </ion-item>
         </ion-card>
       </div>
 
-
-
-
       <div class="div-time">
         <ion-card class="card-time">
           <ion-title class="title-2">Horários</ion-title>
-          <ion-list>
-            <ion-radio-group>
-              <ion-list>
-                <ion-item>
-                  <ion-radio value="radio" justify="space-between">teste</ion-radio>
-                </ion-item>
-              </ion-list>
-            </ion-radio-group>
-          </ion-list>
+
+          <ion-accordion-group>
+            <ion-accordion>
+              <ion-item slot="header" color="light">
+                <ion-label>Selecione um horário</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+
+                <ion-radio-group>
+                  <ion-list>
+                    <ion-item *ngFor="let time of times">
+                      <ion-radio justify="space-between">
+                        {{ time.time }}
+                      </ion-radio>
+                    </ion-item>
+                  </ion-list>
+                </ion-radio-group>
+
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
         </ion-card>
       </div>
 
@@ -110,15 +128,7 @@
           </ion-card-content>
         </ion-card>
       </div>
-      <!-- <div class="button-container">
-        <ion-button class="agend-button" expand="block" shape="round" (click)="confirmToast('top')">Agendar</ion-button>
-      </div> -->
     </div>
-
-
-
-
-
 
     <div class="button-container">
       <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment"
@@ -143,11 +153,5 @@
         Serviços
       </ion-label>
     </ion-tab-button>
-    <!-- <ion-tab-button routerLink="/appointment">
-      <ion-icon name="calendar" color="dark"></ion-icon>
-      <ion-label>
-        Agendamento
-      </ion-label>
-    </ion-tab-button> -->
   </ion-tab-bar>
 </ion-footer>

@@ -9,16 +9,15 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   userData: any;
-  // useruserData: any;
 
   constructor(
     private auth: AngularFireAuth,
     private storage: AngularFireStorage,
     private firestore: AngularFirestore,
     private router: Router
-  ) { 
+  ) {
     this.auth.authState.subscribe(user => {
-      if(user){
+      if (user) {
         this.userData = {
           uid: user.uid,
           email: user.email,
@@ -32,17 +31,17 @@ export class AuthService {
     });
   }
 
-  async register(email: string, password: string, name: string, mediaURL: File | undefined){
-    try{
+  async register(email: string, password: string, name: string, mediaURL: File | undefined) {
+    try {
       const userCredentials = await this.auth.createUserWithEmailAndPassword(email, password);
       const user = userCredentials.user;
       let mediaURLUploaded: string | undefined = undefined;
-      if(user){
-        if(mediaURL){
+      if (user) {
+        if (mediaURL) {
           const uploadResult = await this.uploadImage(mediaURL, user.uid);
           mediaURLUploaded = uploadResult;
         }
-        this.userData={
+        this.userData = {
           uid: user.uid,
           email: user.email,
           name: name,
@@ -63,26 +62,26 @@ export class AuthService {
       } else {
         throw new Error('Usuário não locazalizado após cadastro!');
       }
-    }catch (error){
+    } catch (error) {
       throw error;
     }
   }
 
-  login(email: string, password: string){
+  login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
-  resetPassword(email: string){
+  resetPassword(email: string) {
     return this.auth.sendPasswordResetEmail(email);
   }
 
-  private async uploadImage(mediaURL: File, userId: string): Promise<string>{
-    try{
+  private async uploadImage(mediaURL: File, userId: string): Promise<string> {
+    try {
       const storageRef = this.storage.ref(`users/${userId}/${mediaURL.name}`);
       const uploadTask = await storageRef.put(mediaURL);
       const downloadURL = await uploadTask.ref.getDownloadURL();
       return downloadURL;
-    }catch (error){
+    } catch (error) {
       console.error('Erro ao fazer upload da imagem:', error);
       throw error;
     }

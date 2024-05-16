@@ -29,11 +29,13 @@ export class AdminPage implements OnInit, OnDestroy {
 
   showCalendar: boolean = false;
   dates: any;
+  selectedDate!: string;
 
   // times: string[] = [];
   times: any
   newTime: string = '';
   timeSelectedValue: string = '';
+
 
   constructor(
     private firebaseService: FirebaseService,
@@ -104,15 +106,22 @@ export class AdminPage implements OnInit, OnDestroy {
     });
   }
 
-  async addDate(date: string) {
+  async desativarData() {
     try {
-      await this.firebaseService.addDate(date);
-      const toast = await this.toastCtrl.create({
-        message: 'Data desativada com sucesso!',
-        duration: 1500,
-        position: 'top'
-      });
-      await toast.present();
+      if (this.selectedDate) {
+        const dataFormatada = this.formatarData(this.selectedDate);
+
+        await this.firebaseService.addDate(dataFormatada);
+
+        const toast = await this.toastCtrl.create({
+          message: 'Data desativada com sucesso!',
+          duration: 1500,
+          position: 'top'
+        });
+        await toast.present();
+      } else {
+        throw new Error('Por favor, selecione uma data.');
+      }
     } catch (error) {
       const toast = await this.toastCtrl.create({
         message: 'Esta data já foi desativada.',
@@ -123,6 +132,16 @@ export class AdminPage implements OnInit, OnDestroy {
       await toast.present();
     }
   }
+
+  formatarData(data: string): string {
+    const dataObj = new Date(data);
+    const dia = String(dataObj.getDate()).padStart(2, '0');
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+    const ano = dataObj.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+  }
+
 
   deleteDate(dateId: string) {
     this.firebaseService.removeDate(dateId);

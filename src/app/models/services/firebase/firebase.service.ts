@@ -78,11 +78,9 @@ export class FirebaseService {
     return this.firestore.collection('times').snapshotChanges();
   }
 
-//...
-
-removeTime(timeId: string) {
-  return this.firestore.collection('times').doc(timeId).delete();
-}
+  removeTime(timeId: string) {
+    return this.firestore.collection('times').doc(timeId).delete();
+  }
 
 
 }

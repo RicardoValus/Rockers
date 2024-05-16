@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
 
   selectedBarber: string | null = null;
   barbers: any
-  // , 'Barber 3', 'Barber 4'
+
   newBarberName: string = '';
   subscriptions: Subscription[] = []
   barberID: string = ''
@@ -32,6 +32,10 @@ export class HomePage implements OnInit {
   selectedTime: string | null = null;
   hourValues: string[] = [];
   homePageSelectedServices: any;
+
+  selectedDate!: string;
+
+  times: any
 
 
   constructor(
@@ -47,7 +51,14 @@ export class HomePage implements OnInit {
         return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
       })
     })
-    this.subscriptions.push(barberSubscription)
+
+    const timeSubscription = this.firebaseService.getTimes().subscribe(res => {
+      this.times = res.map(time => {
+        return { id: time.payload.doc.id, ...time.payload.doc.data() as any } as any
+      });
+    });
+
+    this.subscriptions.push(barberSubscription, timeSubscription)
 
   }
 

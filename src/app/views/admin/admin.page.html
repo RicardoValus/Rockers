@@ -41,9 +41,20 @@
   <div>
     <ion-card class="card-calendar">
       <ion-item>
-        <ion-input type="date" #dateInput slot="start"></ion-input>
-        <ion-button (click)="addDate(dateInput.value ? dateInput.value.toString() : '')" color="danger"
-          slot="end">Desativar</ion-button>
+        <!-- <ion-input type="date" #dateInput slot="start"></ion-input> -->
+
+        <ion-datetime-button datetime="datetime" slot="start"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+
+        <ion-button (click)="desativarData()" color="danger" slot="end">Desativar</ion-button>
+
+        <!-- <ion-button (click)="addDate(dateInput.value ? dateInput.value.toString() : '')" color="danger"
+          slot="end">Desativar</ion-button> -->
       </ion-item>
 
       <ion-accordion-group>
