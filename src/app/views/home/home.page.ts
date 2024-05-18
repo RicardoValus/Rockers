@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
+
+interface Appointment {
+  services: { name: string, uid: string }[];
+  barber: any;
+  date: string;
+  time: string;
+  id: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -20,9 +27,8 @@ export class HomePage implements OnInit {
   ];
   JSON: any;
 
-  selectedBarber: string | null = null;
   barbers: any
-
+  selectedBarber: any = null;
   newBarberName: string = '';
   subscriptions: Subscription[] = []
   barberID: string = ''
@@ -30,12 +36,19 @@ export class HomePage implements OnInit {
 
   showTime: boolean = false;
   selectedTime: string | null = null;
-  hourValues: string[] = [];
-  homePageSelectedServices: any;
+  times: any
 
   selectedDate!: string;
 
-  times: any
+  appointment: Appointment = {
+    services: [],
+    barber: null,
+    date: '',
+    time: '',
+    id: ''
+
+  };
+  appointments: any;
 
 
   constructor(
@@ -58,22 +71,31 @@ export class HomePage implements OnInit {
       });
     });
 
-    this.subscriptions.push(barberSubscription, timeSubscription)
+    const appointmentsSubscription = this.firebaseService.getAppointments().subscribe(res => {
+      this.appointments = res.map(appointment => {
+        const appointmentData = appointment.payload.doc.data() as any;
+        const id = appointment.payload.doc.id;
+        return { id, ...appointmentData } as Appointment;
+      });
+    });
 
+
+    this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription)
   }
 
-
-  //serviços \/
-
-
+  //serviço
   toggleService(service: { name: string, uid: string }) {
     const index = this.selectedServices.findIndex((s) => s.uid === service.uid);
     if (index > -1) {
       this.selectedServices.splice(index, 1);
+      const indexAppointment = this.appointment.services.findIndex((s) => s.uid == service.uid);
+      if (indexAppointment > -1) {
+        this.appointment.services.splice(indexAppointment, 1);
+      }
     } else {
       this.selectedServices.push(service);
+      this.appointment.services.push(service);
     }
-    console.log('selectedServices:', this.selectedServices);
   }
 
   isSelectedService(service: { name: string, uid: string }): boolean {
@@ -127,49 +149,81 @@ export class HomePage implements OnInit {
     }
   }
 
-
-  //serviços /\
-
-  //agendamentos \/
-
-
-  toggleBarber(barber: string) {
-    if (this.selectedBarber === barber) {
-      this.selectedBarber = null;
-    } else {
-      this.selectedBarber = barber;
-    }
+  //barbeiros
+  toggleBarber(barber: any) {
+    this.selectedBarber = barber;
+    this.appointment.barber = barber;
   }
 
-  uploadFile(image: any) {
-    this.image = image.files;
-  }
 
   isSelected(barber: string): boolean {
     return this.selectedBarber === barber;
   }
 
-  async cancelAppointmentAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Deseja cancelar seu agendamento?',
-      buttons: [
-        {
-          text: 'Não',
-          role: 'cancel',
-          cssClass: 'alert-button-cancel',
-        },
-        {
-          text: 'Sim',
-          cssClass: 'alert-button-confirm',
-          handler: () => {
-            this.cancelAppointmentToast();
-          },
-        },
-      ],
-    });
 
-    await alert.present();
+  //datas
+  formatarData(data: string): string {
+    const dataObj = new Date(data);
+    const dia = String(dataObj.getDate()).padStart(2, '0');
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+    const ano = dataObj.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
   }
+
+  async selectDate() {
+    const dataFormatada = this.formatarData(this.selectedDate);
+    this.appointment.date = dataFormatada;
+  }
+
+
+  //horários
+  onTimeChange(event: any) {
+    this.appointment.time = event.target.value.time;
+  }
+
+
+  uploadFile(image: any) {
+    this.image = image.files;
+  }
+
+
+  async cancelAppointmentAlert(appointment: Appointment) {
+    // if (!appointment || !appointment.id) {
+    //   console.error('appointmentId is empty or undefined');
+    //   return;
+    // }
+
+    // const alert = await this.alertCtrl.create({
+    //   header: 'Deseja cancelar seu agendamento?',
+    //   buttons: [
+    //     {
+    //       text: 'Não',
+    //       role: 'cancel',
+    //       cssClass: 'alert-button-cancel',
+    //     },
+    //     {
+    //       text: 'Sim',
+    //       cssClass: 'alert-button-confirm',
+    //       handler: () => {
+    //         this.firebaseService.removeAppointment(appointment.id).then(() => {
+    //           this.cancelAppointmentToast();
+    //         }).catch((error) => {
+    //           console.error('Error removing appointment:', error);
+    //           this.presentToast('Ocorreu um erro ao cancelar o agendamento. Por favor, tente novamente.');
+    //         });
+    //       },
+    //     },
+    //   ],
+    // });
+
+    // await alert.present();
+  }
+
+  // deleteAppointment(appointmentId: string) {
+  //   this.firebaseService.removeAppointment(appointmentId)
+  // }
+
 
   async cancelAppointmentToast() {
     const toast = await this.toastCtrl.create({
@@ -180,6 +234,36 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
+  //botão de agendamento
+  toSchedule() {
+    if (this.appointment.services.length === 0 || !this.appointment.barber || !this.appointment.date || !this.appointment.time) {
+      this.presentToast('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
 
-  //agendamentos /\
+    this.firebaseService.addAppointment(this.appointment).then(() => {
+      this.presentToast('Agendamento realizado com sucesso!');
+      this.appointment = {
+        services: [],
+        barber: null,
+        date: '',
+        time: '',
+        id: 'some-valid-id',
+      };
+      this.selectedServices = [];
+      this.selectedBarber = null;
+      this.selectedDate = '';
+    }).catch((error) => {
+      this.presentToast('Ocorreu um erro ao realizar o agendamento. Por favor, tente novamente.');
+    });
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+  }
 }

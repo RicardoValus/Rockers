@@ -25,9 +25,9 @@
     </ion-grid>
 
     <div class="body-container">
-      <div class="title-container">
+      <!-- <div class="title-container">
         <ion-title class="title-1">Agendamento</ion-title>
-      </div>
+      </div> -->
       <div>
         <div class="div-grid">
           <ion-card class="card-barber">
@@ -70,7 +70,7 @@
               </ng-template>
             </ion-modal>
 
-            <ion-button slot="end">Selecionar</ion-button>
+            <ion-button slot="end" (click)="selectDate()">Selecionar</ion-button>
           </ion-item>
         </ion-card>
       </div>
@@ -86,10 +86,10 @@
               </ion-item>
               <div class="ion-padding" slot="content">
 
-                <ion-radio-group>
+                <ion-radio-group (ionChange)="onTimeChange($event)">
                   <ion-list>
                     <ion-item *ngFor="let time of times">
-                      <ion-radio justify="space-between">
+                      <ion-radio [value]="time" justify="space-between">
                         {{ time.time }}
                       </ion-radio>
                     </ion-item>
@@ -110,17 +110,14 @@
           </ion-card-header>
           <ion-card-content>
             <ion-list>
-              <ion-item>
+              <ion-item *ngFor="let appointment of appointments">
                 <ion-icon slot="start" name="checkbox-outline"></ion-icon>
-                <ion-label>Agendado para 03/06/2024 às 18:00 com Leo</ion-label>
-                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-button>
-              </ion-item>
-              <ion-item>
-                <ion-icon slot="start" name="checkbox-outline"></ion-icon>
-                <ion-label>Teste de agendamento</ion-label>
-                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert()">
+                <ion-label>Agendado para {{ appointment.date }} às {{ appointment.time }}
+                  <ng-container *ngIf="appointment.barber">
+                    com {{ appointment.barber.barberName }}
+                  </ng-container>
+                </ion-label>
+                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert(appointment)">
                   <ion-icon name="trash"></ion-icon>
                 </ion-button>
               </ion-item>
@@ -131,9 +128,9 @@
     </div>
 
     <div class="button-container">
-      <ion-button class="confirm-button" expand="block" shape="round" routerLink="/appointment"
+      <ion-button class="confirm-button" (click)="toSchedule()" expand="block" shape="round"
         [disabled]="selectedServices.length === 0">
-        Confirmar
+        Agendar
       </ion-button>
     </div>
   </div>
@@ -145,12 +142,6 @@
       <ion-icon name="exit" color="dark"></ion-icon>
       <ion-label>
         Sair
-      </ion-label>
-    </ion-tab-button>
-    <ion-tab-button routerLink="/home">
-      <ion-icon name="home" color="dark"></ion-icon>
-      <ion-label>
-        Serviços
       </ion-label>
     </ion-tab-button>
   </ion-tab-bar>

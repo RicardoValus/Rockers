@@ -3,6 +3,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { first, from, map, mergeMap } from 'rxjs';
 
+interface Appointment {
+  services: { name: string, uid: string }[];
+  barber: any;
+  date: string;
+  time: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,7 +75,7 @@ export class FirebaseService {
 
   addTime(times: string[]) {
     const promises = times.map(time => {
-      const id = this.firestore.createId(); // Gera um identificador único
+      const id = this.firestore.createId();
       return this.firestore.collection('times').doc(id).set({ time });
     });
     return Promise.all(promises);
@@ -82,5 +89,16 @@ export class FirebaseService {
     return this.firestore.collection('times').doc(timeId).delete();
   }
 
+  addAppointment(appointment: Appointment) {
+    const id = this.firestore.createId();
+    return this.firestore.collection('appointments').doc(id).set(appointment);
+  }
 
+  getAppointments() {
+    return this.firestore.collection('appointments').snapshotChanges();
+  }
+
+  removeAppointment(appointmentId: string) {
+    return this.firestore.collection('appointments').doc(appointmentId).delete();
+  }
 }
