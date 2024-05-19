@@ -102,18 +102,21 @@
 
       <ion-card-content>
         <ion-list>
-          <ion-item>
+          <ion-item *ngFor="let appointment of appointments">
             <ion-icon slot="start" name="checkbox-outline"></ion-icon>
 
-            <ion-list>
+            <ion-list *ngIf="appointment.services && appointment.services.length > 0">
               <ion-item class="item-client">
                 Cliente: Ricardo
               </ion-item>
               <ion-item class="item-client">
-                Serviço: Aparar
+                Serviços: {{ getServiceNames(appointment.services) }}
               </ion-item>
               <ion-item class="item-client">
-                Agendamento: 03/06/2024 às 13:00
+                Agendado para: {{ appointment.date }} às {{ appointment.time }}
+              </ion-item>
+              <ion-item class="item-client">
+                Barbeiro: {{ appointment.barber.barberName }}
               </ion-item>
             </ion-list>
 
@@ -121,28 +124,9 @@
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item>
+
+
         </ion-list>
-
-        <ion-item>
-          <ion-icon slot="start" name="checkbox-outline"></ion-icon>
-
-          <ion-list>
-            <ion-item class="item-client">
-              Cliente: Pedro
-            </ion-item>
-            <ion-item class="item-client">
-              Serviço: Cuidado capilar
-            </ion-item>
-            <ion-item class="item-client">
-              Agendamento: 03/06/2024 às 15:00
-            </ion-item>
-          </ion-list>
-
-          <ion-button slot="end" color="danger" routerLink="/login">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-        </ion-item>
-
       </ion-card-content>
     </ion-card>
   </div>

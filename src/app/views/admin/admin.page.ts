@@ -10,6 +10,14 @@ interface Barber {
   barberAvatar: string;
 }
 
+interface Appointment {
+  services: { name: string, uid: string }[];
+  barber: any;
+  date: string;
+  time: string;
+  id: string;
+}
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.page.html',
@@ -35,6 +43,8 @@ export class AdminPage implements OnInit, OnDestroy {
   times: any
   newTime: string = '';
   timeSelectedValue: string = '';
+
+  appointments: any;
 
 
   constructor(
@@ -67,7 +77,15 @@ export class AdminPage implements OnInit, OnDestroy {
       });
     });
 
-    this.subscriptions.push(barberSubscription, dateSubscription, timeSubscription);
+    const appointmentsSubscription = this.firebaseService.getAppointments().subscribe(res => {
+      this.appointments = res.map(appointment => {
+        const appointmentData = appointment.payload.doc.data() as any;
+        const id = appointment.payload.doc.id;
+        return { id, ...appointmentData } as Appointment;
+      });
+    });
+
+    this.subscriptions.push(barberSubscription, dateSubscription, timeSubscription, appointmentsSubscription);
   }
 
   //barbeiros
@@ -233,5 +251,9 @@ export class AdminPage implements OnInit, OnDestroy {
       position: 'top',
     });
     toast.present();
+  }
+
+  getServiceNames(services: any[]): string {
+    return services.map(service => service.name).join(', ');
   }
 }
