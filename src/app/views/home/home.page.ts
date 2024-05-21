@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/models/services/auth/auth.service';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
 
 interface Appointment {
@@ -9,9 +10,7 @@ interface Appointment {
   barber: any;
   date: string;
   time: string;
-  id: string;
 }
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -45,7 +44,6 @@ export class HomePage implements OnInit {
     barber: null,
     date: '',
     time: '',
-    id: ''
 
   };
   appointments: any;
@@ -56,6 +54,7 @@ export class HomePage implements OnInit {
     private toastCtrl: ToastController,
     private router: Router,
     private firebaseService: FirebaseService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -75,9 +74,13 @@ export class HomePage implements OnInit {
       this.appointments = res.map(appointment => {
         const appointmentData = appointment.payload.doc.data() as any;
         const id = appointment.payload.doc.id;
+        console.log(id)
         return { id, ...appointmentData } as Appointment;
       });
     });
+
+    const loggedUserId = this.authService.getLoggedUserThroughLocalStorage().uid;
+    console.log(loggedUserId)
 
 
     this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription)
@@ -188,42 +191,35 @@ export class HomePage implements OnInit {
   }
 
 
-  async cancelAppointmentAlert(appointment: Appointment) {
-    // if (!appointment || !appointment.id) {
-    //   console.error('appointmentId is empty or undefined');
-    //   return;
-    // }
+  async deleteAppointment(index: number) {
+    console.log(this.appointments[index].id)
+    const appointmentId = this.appointments[index].id
 
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Deseja cancelar seu agendamento?',
-    //   buttons: [
-    //     {
-    //       text: 'Não',
-    //       role: 'cancel',
-    //       cssClass: 'alert-button-cancel',
-    //     },
-    //     {
-    //       text: 'Sim',
-    //       cssClass: 'alert-button-confirm',
-    //       handler: () => {
-    //         this.firebaseService.removeAppointment(appointment.id).then(() => {
-    //           this.cancelAppointmentToast();
-    //         }).catch((error) => {
-    //           console.error('Error removing appointment:', error);
-    //           this.presentToast('Ocorreu um erro ao cancelar o agendamento. Por favor, tente novamente.');
-    //         });
-    //       },
-    //     },
-    //   ],
-    // });
+    const alert = await this.alertCtrl.create({
+      header: 'Deseja cancelar seu agendamento?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          cssClass: 'alert-button-confirm',
+          handler: () => {
+            this.firebaseService.removeAppointment(appointmentId).then(() => {
+              this.cancelAppointmentToast();
+            }).catch((error) => {
+              console.error(error);
+              this.presentToast('Ocorreu um erro ao cancelar o agendamento. Por favor, tente novamente.');
+            });
+          },
+        },
+      ],
+    });
 
-    // await alert.present();
+    await alert.present();
   }
-
-  // deleteAppointment(appointmentId: string) {
-  //   this.firebaseService.removeAppointment(appointmentId)
-  // }
-
 
   async cancelAppointmentToast() {
     const toast = await this.toastCtrl.create({
@@ -248,7 +244,6 @@ export class HomePage implements OnInit {
         barber: null,
         date: '',
         time: '',
-        id: 'some-valid-id',
       };
       this.selectedServices = [];
       this.selectedBarber = null;

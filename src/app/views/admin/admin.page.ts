@@ -256,4 +256,52 @@ export class AdminPage implements OnInit, OnDestroy {
   getServiceNames(services: any[]): string {
     return services.map(service => service.name).join(', ');
   }
+
+  async deleteAppointment(index: number) {
+    console.log(this.appointments[index].id)
+    const appointmentId = this.appointments[index].id
+
+    const alert = await this.alertCtrl.create({
+      header: 'Deseja cancelar seu agendamento?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          cssClass: 'alert-button-confirm',
+          handler: () => {
+            this.firebaseService.removeAppointment(appointmentId).then(() => {
+              this.cancelAppointmentToast();
+            }).catch((error) => {
+              console.error(error);
+              this.presentToast('Ocorreu um erro ao cancelar o agendamento. Por favor, tente novamente.');
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async cancelAppointmentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Agendamento cancelado com sucesso!',
+      duration: 1500,
+      position: 'top',
+    });
+    toast.present();
+  }
 }

@@ -13,11 +13,11 @@ export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private router: Router, 
+    private formBuilder: FormBuilder,
+    private router: Router,
     private toastCtrl: ToastController,
     private auth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -25,7 +25,7 @@ export class RegisterPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       passwordConfirmation: ['', Validators.required],
-      profilePicture: [''] 
+      profilePicture: ['']
     });
   }
 
@@ -56,7 +56,7 @@ export class RegisterPage implements OnInit {
   }
 
   submitForm() {
-    if (!this.registerForm.valid){
+    if (!this.registerForm.valid) {
       this.presentToast('Erro ao Cadastrar!', 2000);
     } else {
       const formData = this.registerForm.value;
@@ -70,7 +70,7 @@ export class RegisterPage implements OnInit {
       // Passe o campo de imagem corretamente
       const imageFile = this.registerForm.get('profilePicture')?.value;
 
-      this.auth.register(formData.email, formData.password, formData.username, imageFile).then(() =>{
+      this.auth.register(formData.email, formData.password, formData.username, imageFile).then(() => {
         this.presentToast('Registro realizado com sucesso!', 1500);
         this.router.navigate(['/login']);
       }).catch((error) => {

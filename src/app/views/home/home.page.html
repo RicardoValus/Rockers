@@ -110,14 +110,14 @@
           </ion-card-header>
           <ion-card-content>
             <ion-list>
-              <ion-item *ngFor="let appointment of appointments">
+              <ion-item *ngFor="let appointment of appointments; let i = index">
                 <ion-icon slot="start" name="checkbox-outline"></ion-icon>
                 <ion-label>Agendado para {{ appointment.date }} às {{ appointment.time }}
                   <ng-container *ngIf="appointment.barber">
                     com {{ appointment.barber.barberName }}
                   </ng-container>
                 </ion-label>
-                <ion-button slot="end" color="danger" (click)="cancelAppointmentAlert(appointment)">
+                <ion-button slot="end" color="danger" (click)="deleteAppointment(i)">
                   <ion-icon name="trash"></ion-icon>
                 </ion-button>
               </ion-item>

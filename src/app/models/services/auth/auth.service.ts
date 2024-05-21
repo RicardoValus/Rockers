@@ -86,4 +86,9 @@ export class AuthService {
       throw error;
     }
   }
+
+  getLoggedUserThroughLocalStorage() {
+    const user: any = JSON.parse(localStorage.getItem('user') || 'null');
+    return (user !== null) ? user : null;
+  }
 }

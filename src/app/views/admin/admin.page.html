@@ -102,7 +102,7 @@
 
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let appointment of appointments">
+          <ion-item *ngFor="let appointment of appointments ; let i = index">
             <ion-icon slot="start" name="checkbox-outline"></ion-icon>
 
             <ion-list *ngIf="appointment.services && appointment.services.length > 0">
@@ -120,11 +120,10 @@
               </ion-item>
             </ion-list>
 
-            <ion-button slot="end" color="danger">
+            <ion-button slot="end" color="danger" (click)="deleteAppointment(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item>
-
 
         </ion-list>
       </ion-card-content>
