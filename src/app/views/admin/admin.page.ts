@@ -77,7 +77,7 @@ export class AdminPage implements OnInit, OnDestroy {
       });
     });
 
-    const appointmentsSubscription = this.firebaseService.getAppointments().subscribe(res => {
+    const appointmentsSubscription = this.firebaseService.getAllAppointments().subscribe(res => {
       this.appointments = res.map(appointment => {
         const appointmentData = appointment.payload.doc.data() as any;
         const id = appointment.payload.doc.id;

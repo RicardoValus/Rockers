@@ -68,7 +68,11 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password).then(() => {
+      this.auth.authState.subscribe(user => {this.userData = user
+        localStorage.setItem('user', JSON.stringify(this.userData));
+      })
+    });
   }
 
   resetPassword(email: string) {

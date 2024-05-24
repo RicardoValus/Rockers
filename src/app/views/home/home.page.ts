@@ -10,6 +10,8 @@ interface Appointment {
   barber: any;
   date: string;
   time: string;
+  userId: string;
+  userName: string;
 }
 @Component({
   selector: 'app-home',
@@ -44,9 +46,12 @@ export class HomePage implements OnInit {
     barber: null,
     date: '',
     time: '',
-
+    userId: '',
+    userName: ''
   };
+
   appointments: any;
+  user: any;
 
 
   constructor(
@@ -70,7 +75,7 @@ export class HomePage implements OnInit {
       });
     });
 
-    const appointmentsSubscription = this.firebaseService.getAppointments().subscribe(res => {
+    const appointmentsSubscription = this.firebaseService.getUserAppointments().subscribe(res => {
       this.appointments = res.map(appointment => {
         const appointmentData = appointment.payload.doc.data() as any;
         const id = appointment.payload.doc.id;
@@ -79,11 +84,17 @@ export class HomePage implements OnInit {
       });
     });
 
-    const loggedUserId = this.authService.getLoggedUserThroughLocalStorage().uid;
-    console.log(loggedUserId)
+    const usersSubscription = this.firebaseService.getUsers().subscribe(res => {
+      this.user = res.map(user => {
+        return { id: user.payload.doc.id, ...user.payload.doc.data() as any } as any
+      }); 
+      this.setAppointmentsUserName();
+    });
 
+    this.setAppointmentUserId();
+    this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription, usersSubscription)
 
-    this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription)
+    
   }
 
   //serviço
@@ -177,6 +188,7 @@ export class HomePage implements OnInit {
   async selectDate() {
     const dataFormatada = this.formatarData(this.selectedDate);
     this.appointment.date = dataFormatada;
+    this.dateToast()
   }
 
 
@@ -188,6 +200,14 @@ export class HomePage implements OnInit {
 
   uploadFile(image: any) {
     this.image = image.files;
+  }
+
+  setAppointmentUserId(){
+    this.appointment.userId = this.authService.getLoggedUserThroughLocalStorage().uid
+  }
+
+  setAppointmentsUserName(){
+    this.appointment.userName = this.user[0].name
   }
 
 
@@ -230,6 +250,15 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
+  async dateToast(){
+    const toast = await this.toastCtrl.create({
+      message: 'Data selecionada!',
+      duration: 1500,
+      position: 'top',
+    })
+    toast.present();
+  }
+
   //botão de agendamento
   toSchedule() {
     if (this.appointment.services.length === 0 || !this.appointment.barber || !this.appointment.date || !this.appointment.time) {
@@ -239,15 +268,6 @@ export class HomePage implements OnInit {
 
     this.firebaseService.addAppointment(this.appointment).then(() => {
       this.presentToast('Agendamento realizado com sucesso!');
-      this.appointment = {
-        services: [],
-        barber: null,
-        date: '',
-        time: '',
-      };
-      this.selectedServices = [];
-      this.selectedBarber = null;
-      this.selectedDate = '';
     }).catch((error) => {
       this.presentToast('Ocorreu um erro ao realizar o agendamento. Por favor, tente novamente.');
     });

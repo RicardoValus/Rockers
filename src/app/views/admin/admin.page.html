@@ -107,7 +107,7 @@
 
             <ion-list *ngIf="appointment.services && appointment.services.length > 0">
               <ion-item class="item-client">
-                Cliente: Ricardo
+                Cliente: {{ appointment.userName }}
               </ion-item>
               <ion-item class="item-client">
                 Serviços: {{ getServiceNames(appointment.services) }}

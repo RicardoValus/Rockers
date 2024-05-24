@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { first, from, map, mergeMap } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 interface Appointment {
   services: { name: string, uid: string }[];
   barber: any;
   date: string;
   time: string;
+  userId: string;
+  userName: string;
 }
 
 @Injectable({
@@ -15,10 +18,13 @@ interface Appointment {
 })
 export class FirebaseService {
   barbersPath: string = 'barbers'
+  userId = this.authService.getLoggedUserThroughLocalStorage().uid
+  
 
   constructor(
     private firestore: AngularFirestore,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private authService: AuthService
   ) { }
 
   addBarber(name: string, image: any) {
@@ -90,15 +96,23 @@ export class FirebaseService {
   }
 
   addAppointment(appointment: Appointment) {
-    const id = this.firestore.createId();
-    return this.firestore.collection('appointments').doc(id).set(appointment);
+    return this.firestore.collection('appointments').doc().set(appointment);
   }
 
-  getAppointments() {
-    return this.firestore.collection('appointments').snapshotChanges();
+  getUserAppointments() {
+  return this.firestore.collection('appointments', ref => ref.where('userId', '==', this.userId)).snapshotChanges();
   }
+
 
   removeAppointment(appointmentId: string) {
     return this.firestore.collection('appointments').doc(appointmentId).delete();
+  }
+
+  getAllAppointments(){
+    return this.firestore.collection('appointments').snapshotChanges()
+  }
+
+  getUsers(){
+    return this.firestore.collection('users', ref => ref.where('uid', '==', this.userId)).snapshotChanges();
   }
 }
