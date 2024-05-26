@@ -5,6 +5,17 @@
 </ion-header>
 
 <ion-content>
+
+
+  <div>
+    <mat-list>
+      <mat-list-item>
+        <img matListItemAvatar src="" alt="foto" id="open-modal">
+        <h4 matListItemTitle>{{ appointment.userName }}</h4>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
   <div body-container>
     <div class="title-container">
       <ion-title class="title-1">Serviços</ion-title>
@@ -134,6 +145,39 @@
       </ion-button>
     </div>
   </div>
+
+
+  <ion-modal #modal trigger="open-modal">
+    <ng-template>
+      <ion-content>
+        <ion-toolbar>
+          <ion-title>Foto de Perfil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="light" (click)="modal.dismiss()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-content>
+          <div class="profile-header">
+            <div class="profile-picture" *ngIf="profilePicture">
+              <img [src]="profilePicture" alt="User Profile">
+            </div>
+          </div>
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="form-container">
+            <ion-item class="input-file">
+              <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
+              <input id="file-input" class="file-input" type="file" accept="image/*"
+                (change)="handleFileInput($event)" />
+            </ion-item>
+            <ion-button type="submit" class="save-profile-button" expand="block" shape="round">
+              Salvar
+            </ion-button>
+          </form>
+        </ion-content>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>
 
 <ion-footer>

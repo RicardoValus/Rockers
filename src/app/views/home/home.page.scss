@@ -176,3 +176,93 @@
 h2 {
   text-align: center;
 }
+
+ion-modal {
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: #AEB7B3;
+  --color: white;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+}
+
+.profile-picture {
+  width: 185px;
+  height: 185px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: auto;
+}
+
+.name-item-1 {
+  width: 81%;
+  margin: 10px auto;
+  border-radius: 8px 8px 0 0;
+  border: medium solid darkgray;
+}
+
+.name-item-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6%;
+}
+
+.name-item-2 {
+  width: 100%;
+  text-align: center;
+  padding: 4px 16px 0;
+  font-size: 12px;
+}
+
+.file-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 81%;
+  margin: auto;
+  padding: 10px;
+  background-color: #AEB7B3;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.file-input-label:hover {
+  background-color: #515152;
+}
+
+.file-input {
+  display: none;
+}
+
+.input-file {
+  --border-style: none;
+}
+
+.save-profile-button {
+  width: 81%;
+  margin: 20px auto;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
+}

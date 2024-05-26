@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -53,13 +55,19 @@ export class HomePage implements OnInit {
   appointments: any;
   user: any;
 
+  userImage!: string;
+
+  profilePicture: SafeUrl | undefined;
+  profileForm!: FormGroup;
+
 
   constructor(
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private router: Router,
     private firebaseService: FirebaseService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -91,6 +99,7 @@ export class HomePage implements OnInit {
       this.setAppointmentsUserName();
     });
 
+   
     this.setAppointmentUserId();
     this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription, usersSubscription)
 
@@ -280,5 +289,19 @@ export class HomePage implements OnInit {
       position: 'top'
     });
     toast.present();
+  }
+
+  handleFileInput(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataURL = reader.result as string;
+      this.profilePicture = this.sanitizer.bypassSecurityTrustUrl(dataURL);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  saveProfile() {
+
   }
 }

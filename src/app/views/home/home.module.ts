@@ -1,12 +1,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
+import {MatListModule} from '@angular/material/list'; 
+import {MatListItemTitle} from '@angular/material/list'; 
 
 
 @NgModule({
@@ -15,7 +17,11 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    MatListModule,
+    MatListItemTitle,
+    ReactiveFormsModule
+
   ],
   declarations: [HomePage]
 })
