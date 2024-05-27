@@ -89,15 +89,20 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   //barbeiros
-  toggleAddBarber() {
+ toggleAddBarber() {
     this.showAddBarber = !this.showAddBarber;
   }
 
   async addBarber() {
     this.firebaseService.addBarber(this.newBarberName, this.image);
-    // setTimeout(() => { //recarregar pagina depois de 2 segundos
-    // location.reload();
-    // }, 2000)
+    const toast = await this.toastCtrl.create({
+      message: 'Barbeiro adicionado com sucesso!',
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+    this.newBarberName = '';
+    this.image = null;
   }
 
   setBarberID(index: number) {
@@ -109,8 +114,14 @@ export class AdminPage implements OnInit, OnDestroy {
     this.selectedBarber = barber === this.selectedBarber ? null : barber;
   }
 
-  removeBarber() {
+  async removeBarber() {
     this.firebaseService.removeBarber(this.barberID)
+    const toast = await this.toastCtrl.create({
+      message: 'Barbeiro removido com sucesso!',
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
   }
 
   uploadFile(image: any) {
@@ -304,4 +315,5 @@ export class AdminPage implements OnInit, OnDestroy {
     });
     toast.present();
   }
+  
 }

@@ -21,6 +21,8 @@ interface Appointment {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  registerForm!: FormGroup;
+  
   selectedServices: { name: string, uid: string }[] = [];
   services: { name: string, uid: string }[] = [
     { name: 'Aparar', uid: 'service1' },
@@ -207,8 +209,16 @@ export class HomePage implements OnInit {
   }
 
 
-  uploadFile(image: any) {
-    this.image = image.files;
+  uploadFile(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataURL = reader.result as string;
+        this.registerForm.patchValue({ profilePicture: dataURL });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   setAppointmentUserId(){
@@ -291,15 +301,7 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  handleFileInput(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataURL = reader.result as string;
-      this.profilePicture = this.sanitizer.bypassSecurityTrustUrl(dataURL);
-    };
-    reader.readAsDataURL(file);
-  }
+
 
   saveProfile() {
 

@@ -61,13 +61,11 @@ export class RegisterPage implements OnInit {
     } else {
       const formData = this.registerForm.value;
 
-      // Verifica se a senha e a confirmação de senha são iguais
       if (formData.password !== formData.passwordConfirmation) {
         this.presentToast('A senha e a confirmação de senha não coincidem!', 3000);
         return;
       }
 
-      // Passe o campo de imagem corretamente
       const imageFile = this.registerForm.get('profilePicture')?.value;
 
       this.auth.register(formData.email, formData.password, formData.username, imageFile).then(() => {

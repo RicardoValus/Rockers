@@ -166,18 +166,16 @@
             <ion-item class="input-file">
               <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
               <input id="file-input" class="file-input" type="file" accept="image/*"
-                (change)="handleFileInput($event)" />
+              (change)="uploadFile($event)" />
             </ion-item>
             <ion-button type="submit" class="save-profile-button" expand="block" shape="round">
               Salvar
             </ion-button>
           </form>
         </ion-content>
-
       </ion-content>
     </ng-template>
   </ion-modal>
-
 </ion-content>
 
 <ion-footer>
