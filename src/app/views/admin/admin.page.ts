@@ -89,7 +89,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   //barbeiros
- toggleAddBarber() {
+  toggleAddBarber() {
     this.showAddBarber = !this.showAddBarber;
   }
 
@@ -315,5 +315,5 @@ export class AdminPage implements OnInit, OnDestroy {
     });
     toast.present();
   }
-  
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -21,8 +21,9 @@ interface Appointment {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  registerForm!: FormGroup;
-  
+  profileForm!: FormGroup;
+  userID = this.authService.getLoggedUserThroughLocalStorage().uid
+
   selectedServices: { name: string, uid: string }[] = [];
   services: { name: string, uid: string }[] = [
     { name: 'Aparar', uid: 'service1' },
@@ -55,12 +56,12 @@ export class HomePage implements OnInit {
   };
 
   appointments: any;
-  user: any;
 
+  user: any;
+  userName!: string;
   userImage!: string;
 
   profilePicture: SafeUrl | undefined;
-  profileForm!: FormGroup;
 
 
   constructor(
@@ -69,6 +70,7 @@ export class HomePage implements OnInit {
     private router: Router,
     private firebaseService: FirebaseService,
     private authService: AuthService,
+    private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -97,15 +99,19 @@ export class HomePage implements OnInit {
     const usersSubscription = this.firebaseService.getUsers().subscribe(res => {
       this.user = res.map(user => {
         return { id: user.payload.doc.id, ...user.payload.doc.data() as any } as any
-      }); 
+      });
       this.setAppointmentsUserName();
+      this.userName = this.user[0].name;
+      this.userImage = this.user[0].mediaURL;
     });
 
-   
+    this.profileForm = this.formBuilder.group({
+      profilePicture: ['']
+    });
+
     this.setAppointmentUserId();
     this.subscriptions.push(barberSubscription, timeSubscription, appointmentsSubscription, usersSubscription)
 
-    
   }
 
   //serviço
@@ -209,23 +215,13 @@ export class HomePage implements OnInit {
   }
 
 
-  uploadFile(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataURL = reader.result as string;
-        this.registerForm.patchValue({ profilePicture: dataURL });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
 
-  setAppointmentUserId(){
+
+  setAppointmentUserId() {
     this.appointment.userId = this.authService.getLoggedUserThroughLocalStorage().uid
   }
 
-  setAppointmentsUserName(){
+  setAppointmentsUserName() {
     this.appointment.userName = this.user[0].name
   }
 
@@ -269,7 +265,7 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  async dateToast(){
+  async dateToast() {
     const toast = await this.toastCtrl.create({
       message: 'Data selecionada!',
       duration: 1500,
@@ -301,9 +297,21 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
+  uploadFile(image: any) {
+    const file = image.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageDataUrl = reader.result as string;
+      this.profilePicture = this.sanitizer.bypassSecurityTrustUrl(imageDataUrl);
+    };
+    reader.readAsDataURL(file);
+    this.image = image.files;
+  }
 
-
-  saveProfile() {
-
+  async saveProfile() {
+    console.log('SAVE PROFILE')
+    const userIdFromFirestore = this.user[0].id
+    const imageURL = await this.firebaseService.getImageDownloadURL(this.image, this.userID, userIdFromFirestore)
+    this.authService.updateProfilePicture(imageURL, userIdFromFirestore)
   }
 }

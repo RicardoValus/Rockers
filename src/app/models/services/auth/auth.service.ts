@@ -31,33 +31,28 @@ export class AuthService {
     });
   }
 
-  async register(email: string, password: string, name: string, mediaURL: File | undefined) {
+  async register(email: string, password: string, name: string) {
     try {
       const userCredentials = await this.auth.createUserWithEmailAndPassword(email, password);
       const user = userCredentials.user;
-      let mediaURLUploaded: string | undefined = undefined;
       if (user) {
-        if (mediaURL) {
-          const uploadResult = await this.uploadImage(mediaURL, user.uid);
-          mediaURLUploaded = uploadResult;
-        }
         this.userData = {
           uid: user.uid,
           email: user.email,
           name: name,
-          mediaURL: mediaURLUploaded
+          mediaURL: ''
         };
         localStorage.setItem('user', JSON.stringify(this.userData));
         await this.firestore.collection('users').doc(user.uid).set({
           uid: user.uid,
           email: user.email,
           name: name,
-          mediaURL: mediaURLUploaded
+          mediaURL: ''
         });
         return {
           user: this.userData,
           name: user.displayName,
-          mediaURL: mediaURLUploaded
+          mediaURL: ''
         };
       } else {
         throw new Error('Usuário não locazalizado após cadastro!');
@@ -69,7 +64,8 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password).then(() => {
-      this.auth.authState.subscribe(user => {this.userData = user
+      this.auth.authState.subscribe(user => {
+        this.userData = user
         localStorage.setItem('user', JSON.stringify(this.userData));
       })
     });
@@ -94,5 +90,11 @@ export class AuthService {
   getLoggedUserThroughLocalStorage() {
     const user: any = JSON.parse(localStorage.getItem('user') || 'null');
     return (user !== null) ? user : null;
+  }
+
+  updateProfilePicture(newImageURL: string, id: string) {
+    return this.firestore.collection('users').doc(id).update({
+      mediaURL: newImageURL
+    })
   }
 }

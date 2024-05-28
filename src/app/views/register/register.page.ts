@@ -25,7 +25,6 @@ export class RegisterPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       passwordConfirmation: ['', Validators.required],
-      profilePicture: ['']
     });
   }
 
@@ -42,19 +41,6 @@ export class RegisterPage implements OnInit {
     toast.present();
   }
 
-  // Método para upload de arquivo
-  uploadFile(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataURL = reader.result as string;
-        this.registerForm.patchValue({ profilePicture: dataURL });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   submitForm() {
     if (!this.registerForm.valid) {
       this.presentToast('Erro ao Cadastrar!', 2000);
@@ -66,9 +52,7 @@ export class RegisterPage implements OnInit {
         return;
       }
 
-      const imageFile = this.registerForm.get('profilePicture')?.value;
-
-      this.auth.register(formData.email, formData.password, formData.username, imageFile).then(() => {
+      this.auth.register(formData.email, formData.password, formData.username).then(() => {
         this.presentToast('Registro realizado com sucesso!', 1500);
         this.router.navigate(['/login']);
       }).catch((error) => {

@@ -10,8 +10,10 @@
   <div>
     <mat-list>
       <mat-list-item>
-        <img matListItemAvatar src="" alt="foto" id="open-modal">
-        <h4 matListItemTitle>{{ appointment.userName }}</h4>
+        <img *ngIf="userImage" matListItemAvatar src="{{ userImage }}" alt="foto" id="open-modal">
+        <img *ngIf="!userImage" matListItemAvatar src="https://ionicframework.com/docs/img/demos/avatar.svg"
+          alt="image default">
+        <h4 matListItemTitle>{{ userName }}</h4>
       </mat-list-item>
     </mat-list>
   </div>
@@ -165,8 +167,7 @@
           <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="form-container">
             <ion-item class="input-file">
               <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
-              <input id="file-input" class="file-input" type="file" accept="image/*"
-              (change)="uploadFile($event)" />
+              <input type="file" (change)="uploadFile($event.target)" accept="image/*">
             </ion-item>
             <ion-button type="submit" class="save-profile-button" expand="block" shape="round">
               Salvar

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { first, from, map, mergeMap } from 'rxjs';
+import { async, first, from, map, mergeMap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 interface Appointment {
@@ -19,7 +19,7 @@ interface Appointment {
 export class FirebaseService {
   barbersPath: string = 'barbers'
   userId = this.authService.getLoggedUserThroughLocalStorage().uid
-  
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -100,7 +100,7 @@ export class FirebaseService {
   }
 
   getUserAppointments() {
-  return this.firestore.collection('appointments', ref => ref.where('userId', '==', this.userId)).snapshotChanges();
+    return this.firestore.collection('appointments', ref => ref.where('userId', '==', this.userId)).snapshotChanges();
   }
 
 
@@ -108,11 +108,27 @@ export class FirebaseService {
     return this.firestore.collection('appointments').doc(appointmentId).delete();
   }
 
-  getAllAppointments(){
+  getAllAppointments() {
     return this.firestore.collection('appointments').snapshotChanges()
   }
 
-  getUsers(){
+  getUsers() {
     return this.firestore.collection('users', ref => ref.where('uid', '==', this.userId)).snapshotChanges();
+  }
+
+  async getImageDownloadURL(image: any, path: string, id: string) {
+    var imageURL: string = ''
+    const uploadTask = this.uploadImage(image, path, id)
+    await uploadTask?.then(async snapshot => {
+      imageURL = await snapshot.ref.getDownloadURL()
+    })
+    return imageURL
+  }
+
+  uploadImage(image: any, PATH: string, fileName: any) {
+    const file = image.item(0)
+    const path = `${PATH}/${fileName}`
+    let task = this.storage.upload(path, file)
+    return task
   }
 }
