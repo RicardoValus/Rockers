@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/models/services/auth/auth.service';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
+import { UserProfilePage } from '../components/user-profile/user-profile.page';
 
 interface Appointment {
   services: { name: string, uid: string }[];
@@ -71,7 +73,8 @@ export class HomePage implements OnInit {
     private firebaseService: FirebaseService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private matDialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -297,21 +300,9 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  uploadFile(image: any) {
-    const file = image.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imageDataUrl = reader.result as string;
-      this.profilePicture = this.sanitizer.bypassSecurityTrustUrl(imageDataUrl);
-    };
-    reader.readAsDataURL(file);
-    this.image = image.files;
-  }
-
-  async saveProfile() {
-    console.log('SAVE PROFILE')
-    const userIdFromFirestore = this.user[0].id
-    const imageURL = await this.firebaseService.getImageDownloadURL(this.image, this.userID, userIdFromFirestore)
-    this.authService.updateProfilePicture(imageURL, userIdFromFirestore)
+  changePhoto() {
+    const dialogRef = this.matDialog.open(UserProfilePage);
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

@@ -20,8 +20,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import {MatListModule} from '@angular/material/list'; 
-import {MatListItemTitle} from '@angular/material/list'; 
+import {MatListModule} from '@angular/material/list';
+import {MatListItemTitle} from '@angular/material/list';
 
 
 @NgModule({
@@ -45,8 +45,8 @@ import {MatListItemTitle} from '@angular/material/list';
     ReactiveFormsModule,
     JsonPipe,
     MatListModule,
-    MatListItemTitle
-    
+    MatListItemTitle,
+
   ],
 
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideNativeDateAdapter()],

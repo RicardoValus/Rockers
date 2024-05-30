@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-import {MatListModule} from '@angular/material/list'; 
-import {MatListItemTitle} from '@angular/material/list'; 
+import { MatListModule } from '@angular/material/list';
+import { MatListItemTitle } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,9 +21,10 @@ import {MatListItemTitle} from '@angular/material/list';
     HomePageRoutingModule,
     MatListModule,
     MatListItemTitle,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRippleModule
 
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }

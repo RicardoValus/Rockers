@@ -46,7 +46,6 @@ export class AdminPage implements OnInit, OnDestroy {
 
   appointments: any;
 
-
   constructor(
     private firebaseService: FirebaseService,
     private alertCtrl: AlertController,
@@ -171,7 +170,6 @@ export class AdminPage implements OnInit, OnDestroy {
     return `${dia}/${mes}/${ano}`;
   }
 
-
   deleteDate(dateId: string) {
     this.firebaseService.removeDate(dateId);
     console.log('removido')
@@ -273,7 +271,7 @@ export class AdminPage implements OnInit, OnDestroy {
     const appointmentId = this.appointments[index].id
 
     const alert = await this.alertCtrl.create({
-      header: 'Deseja cancelar seu agendamento?',
+      header: 'Deseja cancelar este agendamento?',
       buttons: [
         {
           text: 'Não',
@@ -315,5 +313,4 @@ export class AdminPage implements OnInit, OnDestroy {
     });
     toast.present();
   }
-
 }

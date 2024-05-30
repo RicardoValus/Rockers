@@ -1,0 +1,37 @@
+<main>
+  <div style="text-align: center;">
+    <h2 mat-dialog-title>Alterar Foto de Perfil</h2>
+  </div>
+  <mat-dialog-content class="mat-typography">
+    <div class="profile-header">
+      <mat-card-content class="profile-picture">
+        <div class="profile-picture">
+          <img *ngIf="profilePicture" [src]="profilePicture" alt="User Profile">
+          <img *ngIf="!profilePicture" src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="image default">
+        </div>
+      </mat-card-content>
+    </div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+                <div class="file-btn">
+                  <input type="file" (change)="uploadFile($event.target)" accept="image/*">
+                  <label class="file-input-label" for="customFile" id="filename" type="file"
+                    (change)="uploadFile($event.target)" accept="image/*">Selecionar Foto</label>
+                </div>
+                <mat-dialog-actions align="end">
+                  <button mat-button mat-dialog-close (click)="closeDialog()">Fechar</button>
+                  <button mat-button [mat-dialog-close]="true" cdkFocusInitial type="submit">Salvar</button>
+                </mat-dialog-actions>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+</main>

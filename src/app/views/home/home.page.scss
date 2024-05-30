@@ -193,21 +193,6 @@ ion-modal ion-toolbar {
   --color: white;
 }
 
-.profile-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-}
-
-.profile-picture {
-  width: 185px;
-  height: 185px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: solid 1px darkgray;
-}
-
 .profile-picture img {
   width: 100%;
   height: auto;

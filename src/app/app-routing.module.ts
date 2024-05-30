@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'user-profile',
-    loadChildren: () => import('./views/user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+    loadChildren: () => import('./views/components/user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
   {
     path: 'appointment',
@@ -38,7 +38,8 @@ const routes: Routes = [
   {
     path: 'reset-password',
     loadChildren: () => import('./views/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
-  },  {
+  },
+  {
     path: 'test',
     loadChildren: () => import('./views/test/test.module').then( m => m.TestPageModule)
   },

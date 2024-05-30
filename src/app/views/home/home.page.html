@@ -5,15 +5,13 @@
 </ion-header>
 
 <ion-content>
-
-
   <div>
     <mat-list>
-      <mat-list-item>
-        <img *ngIf="userImage" matListItemAvatar src="{{ userImage }}" alt="foto" id="open-modal">
-        <img *ngIf="!userImage" matListItemAvatar src="https://ionicframework.com/docs/img/demos/avatar.svg"
-          alt="image default">
-        <h4 matListItemTitle>{{ userName }}</h4>
+      <mat-list-item matRipple (click)="changePhoto()">
+        <img *ngIf="userImage" matListItemAvatar src="{{ userImage }}" alt="foto" (click)="changePhoto()">
+        <img *ngIf="!userImage" matListItemAvatar src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="foto"
+          (click)="changePhoto()">
+        <h4 matListItemTitle style="padding-top: 15px;">{{ userName }}</h4>
       </mat-list-item>
     </mat-list>
   </div>
@@ -38,9 +36,6 @@
     </ion-grid>
 
     <div class="body-container">
-      <!-- <div class="title-container">
-        <ion-title class="title-1">Agendamento</ion-title>
-      </div> -->
       <div>
         <div class="div-grid">
           <ion-card class="card-barber">
@@ -149,7 +144,7 @@
   </div>
 
 
-  <ion-modal #modal trigger="open-modal">
+  <!-- <ion-modal #modal trigger="open-modal">
     <ng-template>
       <ion-content>
         <ion-toolbar>
@@ -177,15 +172,15 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-</ion-content>
+</ion-content> -->
 
-<ion-footer>
-  <ion-tab-bar color="primary">
-    <ion-tab-button (click)="exitAlert()">
-      <ion-icon name="exit" color="dark"></ion-icon>
-      <ion-label>
-        Sair
-      </ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-footer>
+  <ion-footer>
+    <ion-tab-bar color="primary">
+      <ion-tab-button (click)="exitAlert()">
+        <ion-icon name="exit" color="dark"></ion-icon>
+        <ion-label>
+          Sair
+        </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-footer>
