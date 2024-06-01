@@ -131,4 +131,14 @@ export class FirebaseService {
     let task = this.storage.upload(path, file)
     return task
   }
+
+  checkForDuplicateAppointment(appointment: Appointment): Promise<boolean> {
+    return this.firestore.collection('appointments').ref.where('barber.id', '==', appointment.barber.id)
+      .where('date', '==', appointment.date)
+      .where('time', '==', appointment.time)
+      .get()
+      .then(snapshot => {
+        return snapshot.size > 0;
+      });
+  }
 }

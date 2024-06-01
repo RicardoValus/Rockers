@@ -281,10 +281,15 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  //botão de agendamento
   toSchedule() {
-    if (this.appointment.services.length === 0 || !this.appointment.barber || !this.appointment.date || !this.appointment.time) {
-      this.presentToast('Por favor, preencha todos os campos obrigatórios.');
+  if (this.appointment.services.length === 0 || !this.appointment.barber || !this.appointment.date || !this.appointment.time) {
+    this.presentToast('Por favor, preencha todos os campos obrigatórios.');
+    return;
+  }
+
+  this.firebaseService.checkForDuplicateAppointment(this.appointment).then(duplicate => {
+    if (duplicate) {
+      this.presentToast('Já existe um agendamento com essas informações. Por favor, escolha outra data e hora.');
       return;
     }
 
@@ -293,7 +298,8 @@ export class HomePage implements OnInit {
     }).catch((error) => {
       this.presentToast('Ocorreu um erro ao realizar o agendamento. Por favor, tente novamente.');
     });
-  }
+  });
+}
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({

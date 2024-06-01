@@ -143,37 +143,6 @@
     </div>
   </div>
 
-
-  <!-- <ion-modal #modal trigger="open-modal">
-    <ng-template>
-      <ion-content>
-        <ion-toolbar>
-          <ion-title>Foto de Perfil</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="light" (click)="modal.dismiss()">Fechar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-content>
-          <div class="profile-header">
-            <div class="profile-picture" *ngIf="profilePicture">
-              <img [src]="profilePicture" alt="User Profile">
-            </div>
-          </div>
-          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="form-container">
-            <ion-item class="input-file">
-              <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
-              <input type="file" (change)="uploadFile($event.target)" accept="image/*">
-            </ion-item>
-            <ion-button type="submit" class="save-profile-button" expand="block" shape="round">
-              Salvar
-            </ion-button>
-          </form>
-        </ion-content>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-</ion-content> -->
-
   <ion-footer>
     <ion-tab-bar color="primary">
       <ion-tab-button (click)="exitAlert()">
