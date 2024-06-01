@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/models/services/auth/auth.service';
 })
 export class ResetPasswordPage implements OnInit {
   resetPasswordForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,13 +27,16 @@ export class ResetPasswordPage implements OnInit {
   }
 
   resetPassword(email: string) {
+    this.loading = true;
     if (this.resetPasswordForm.valid) {
       this.authService.resetPassword(email)
         .then(() => {
+          this.loading = false;
           this.presentToast('Recuperação de senha enviada para seu e-mail!');
           this.router.navigate(['/login']);
         })
         .catch((error: any) => {
+          this.loading = false;
           this.presentToast('E-mail inválido!');
           console.error('Erro ao enviar e-mail de redefinição de senha:', error);
         });

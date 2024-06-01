@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/models/services/auth/auth.service';
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,20 +43,25 @@ export class RegisterPage implements OnInit {
   }
 
   submitForm() {
+    this.loading = true;
     if (!this.registerForm.valid) {
+      this.loading = false;
       this.presentToast('Erro ao Cadastrar!', 2000);
     } else {
       const formData = this.registerForm.value;
 
       if (formData.password !== formData.passwordConfirmation) {
+        this.loading = false;
         this.presentToast('A senha e a confirmação de senha não coincidem!', 3000);
         return;
       }
 
       this.auth.register(formData.email, formData.password, formData.username).then(() => {
+        this.loading = false;
         this.presentToast('Registro realizado com sucesso!', 1500);
         this.router.navigate(['/login']);
       }).catch((error) => {
+        this.loading = false;
         console.error('Erro ao cadastrar:', error);
         this.presentToast('Erro ao cadastrar!', 3000);
       });

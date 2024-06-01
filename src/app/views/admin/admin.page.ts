@@ -35,17 +35,14 @@ export class AdminPage implements OnInit, OnDestroy {
   image: any;
   barberID: string = ''
   subscriptions: Subscription[] = []
-
   showCalendar: boolean = false;
   dates: any;
   selectedDate!: string;
-
-  // times: string[] = [];
   times: any
   newTime: string = '';
   timeSelectedValue: string = '';
-
   appointments: any;
+  loading: boolean = false;
 
   constructor(
     private firebaseService: FirebaseService,

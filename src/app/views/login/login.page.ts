@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/models/services/auth/auth.service';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -28,16 +29,18 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    this.loading = true;
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-
     try {
       await this.authService.login(username, password);
       this.router.navigate(['/home']);
       this.presentToast('Login realizado com sucesso!');
+      this.loading = false;
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       this.presentToast('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
+      this.loading = false;
     }
   }
 
