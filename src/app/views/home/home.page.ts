@@ -136,6 +136,10 @@ export class HomePage implements OnInit {
     return this.selectedServices.some((s) => s.uid === service.uid);
   }
 
+  signOut(): void {
+    this.authService.signOut();
+  }
+
   async exitAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Deseja sair da sua conta?',
@@ -149,8 +153,8 @@ export class HomePage implements OnInit {
           text: 'Sim',
           cssClass: 'alert-button-confirm',
           handler: () => {
+            this.signOut();
             this.exitToast();
-            this.router.navigate(['/login']);
           },
         },
       ],

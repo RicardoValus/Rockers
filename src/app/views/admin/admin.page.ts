@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/models/services/auth/auth.service';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
 
 interface Barber {
@@ -50,7 +51,8 @@ export class AdminPage implements OnInit, OnDestroy {
     private firebaseService: FirebaseService,
     private alertCtrl: AlertController,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private authService: AuthService
   ) { }
 
   ngOnDestroy(): void {
@@ -230,6 +232,10 @@ export class AdminPage implements OnInit, OnDestroy {
     { value: '18:00', label: '18:00' }
   ];
 
+  signOut(): void {
+    this.authService.signOut();
+  }
+  
   async exitAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Deseja sair da sua conta?',
@@ -244,7 +250,7 @@ export class AdminPage implements OnInit, OnDestroy {
           cssClass: 'alert-button-confirm',
           handler: () => {
             this.exitToast();
-            this.router.navigate(['/login']);
+            this.signOut();
           },
         },
       ],

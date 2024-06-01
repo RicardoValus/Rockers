@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
+import { Observable, map, of, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -62,12 +63,37 @@ export class AuthService {
     }
   }
 
+  isAdmin(): Observable<boolean> {
+    const user = this.getLoggedUserThroughLocalStorage();
+    if (user && user.uid) {
+      return this.firestore.collection('users').doc(user.uid).valueChanges().pipe(
+        map(userData => {
+          if (userData && typeof userData === 'object' && 'isAdmin' in userData) {
+            return (userData as { isAdmin: boolean }).isAdmin;
+          } else {
+            return false;
+          }
+        })
+      );
+    }
+    return of(false);
+  }
+
   login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password).then(() => {
       this.auth.authState.subscribe(user => {
-        this.userData = user
+        this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-      })
+        this.isAdmin().pipe(
+          take(1)
+        ).subscribe(isAdmin => {
+          if (isAdmin) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        });
+      });
     });
   }
 
@@ -96,5 +122,16 @@ export class AuthService {
     return this.firestore.collection('users').doc(id).update({
       mediaURL: newImageURL
     })
+  }
+
+  signOut(): Promise<void> {
+    if (this.getLoggedUserThroughLocalStorage() === null) {
+      return Promise.resolve();
+    }
+    return this.auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['/login']);
+      console.log('Deslogado')
+    });
   }
 }
