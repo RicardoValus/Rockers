@@ -253,3 +253,16 @@ ion-modal ion-toolbar {
   --background: #AEB7B3 !important;
   --color: #ffffff !important;
 }
+
+.border-photo{
+  border: 1rem solid black
+}
+
+ion-delegate-host{
+  height: auto;
+}
+
+ion-modal {
+  --height: auto;
+  --max-height: 80%;
+}

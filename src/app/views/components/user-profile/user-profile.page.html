@@ -4,10 +4,10 @@
   </div>
   <mat-dialog-content class="mat-typography">
     <div class="profile-header">
-      <mat-card-content class="profile-picture">
+      <mat-card-content>
         <div class="profile-picture">
-          <img *ngIf="profilePicture" [src]="profilePicture" alt="User Profile">
-          <img *ngIf="!profilePicture" src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="image default">
+          <img *ngIf="profilePicture" [src]="profilePicture" alt="User Profile" class="border-photo">
+          <img *ngIf="!profilePicture" src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="image default" class="border-photo">
         </div>
       </mat-card-content>
     </div>
@@ -32,6 +32,5 @@
         </div>
       </div>
     </div>
-
   </mat-dialog-content>
 </main>

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, IonSelect, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/models/services/auth/auth.service';
 import { FirebaseService } from 'src/app/models/services/firebase/firebase.service';
@@ -26,6 +26,7 @@ interface Appointment {
 })
 export class AdminPage implements OnInit, OnDestroy {
   @Output() timeSelected = new EventEmitter<string>();
+  @ViewChild('horarioSelect') horarioSelect!: IonSelect;
 
   barbers: any;
   selectedBarber: Barber | null = null;
@@ -101,6 +102,7 @@ export class AdminPage implements OnInit, OnDestroy {
     toast.present();
     this.newBarberName = '';
     this.image = null;
+    this.toggleAddBarber();
   }
 
   setBarberID(index: number) {
@@ -177,8 +179,8 @@ export class AdminPage implements OnInit, OnDestroy {
   //horários
   async selectTime(event: any) {
     const timesSelected = event.detail.value;
-    // this.horarios = horariosSelecionados;
     await this.firebaseService.addTime(timesSelected);
+    this.horarioSelect.value = [];
   }
 
   removeTime(timeId: string) {

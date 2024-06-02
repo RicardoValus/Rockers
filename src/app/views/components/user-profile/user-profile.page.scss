@@ -10,6 +10,7 @@
   height: 185px;
   border-radius: 50%;
   overflow: hidden;
+  border: 5px solid #AEB7B3
 }
 
 .file-btn {
@@ -38,15 +39,7 @@
   display: none;
 }
 
-.file-btn input[type="file"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
+
 
 main{
   width: 300px;

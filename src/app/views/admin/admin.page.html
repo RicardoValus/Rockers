@@ -29,11 +29,22 @@
         <ion-button (click)="removeBarber()" color="danger" expand="block" shape="round">
           <ion-icon name="trash"></ion-icon> Remover Barbeiro
         </ion-button>
-        <ion-item *ngIf="showAddBarber">
-          <ion-label class="custom-label" position="floating">Nome do Barbeiro</ion-label>
+        <ion-item *ngIf="showAddBarber" class="testando">
+
+          <div>
+          <ion-label class="custom-label" placeholder="" position="floating" >Nome do Barbeiro</ion-label>
           <ion-input class="custom-input" type="text" [(ngModel)]="newBarberName"></ion-input>
-          <input type="file" (change)="uploadFile($event.target)" accept="image/*">
-          <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
+          </div>
+          <div style="display: flex; flex-direction: row; align-items: center;">
+            <div class="file-btn">
+              <input type="file" id="customFile" (change)="uploadFile($event.target)" accept="image/*" hidden>
+              <label class="file-input-label" for="customFile">Selecionar Foto</label>
+            </div>
+            <div>
+              <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
+            </div>
+          </div>
+     
         </ion-item>
       </ion-card-content>
     </ion-card>

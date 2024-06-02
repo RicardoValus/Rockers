@@ -114,22 +114,6 @@
   }
 }
 
-ion-modal {
-  --height: 50%;
-  --border-radius: 16px;
-  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
-ion-modal::part(backdrop) {
-  background: rgba(209, 213, 219);
-  opacity: 1;
-}
-
-ion-modal ion-toolbar {
-  --background: #AEB7B3;
-  --color: white;
-}
-
 .profile-header {
   display: flex;
   justify-content: center;
@@ -202,4 +186,36 @@ ion-modal ion-toolbar {
   gap: 8px;
   --background: #AEB7B3 !important;
   --color: #ffffff !important;
+}
+
+ion-modal {
+  --height: auto;
+  --max-height: 80%;
+}
+
+.card-content-md {
+  font-size: 0.875rem;
+  line-height: normal;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-size: 0.75em; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.testando{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+ion-input{
+  padding-bottom: 10px;
 }
