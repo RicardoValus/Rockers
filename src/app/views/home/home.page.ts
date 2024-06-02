@@ -211,8 +211,15 @@ export class HomePage implements OnInit {
 
   async selectDate() {
     const dataFormatada = this.formatarData(this.selectedDate);
+    const disabledDates = await this.firebaseService.getDisabledDates();
+  
+    if (disabledDates.includes(dataFormatada)) {
+      this.presentToast('Essa data está indisponível. Por favor, escolha outra data.');
+      return;
+    }
+  
     this.appointment.date = dataFormatada;
-    this.dateToast()
+    this.dateToast();
   }
 
 
@@ -220,9 +227,6 @@ export class HomePage implements OnInit {
   onTimeChange(event: any) {
     this.appointment.time = event.target.value.time;
   }
-
-
-
 
   setAppointmentUserId() {
     this.appointment.userId = this.authService.getLoggedUserThroughLocalStorage().uid

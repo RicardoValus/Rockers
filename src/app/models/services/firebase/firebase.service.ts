@@ -59,7 +59,7 @@ export class FirebaseService {
         first(),
         mergeMap((snapshot) => {
           if (snapshot.empty) {
-            return from(this.firestore.collection('dates').add({ date }));
+            return from(this.firestore.collection('dates').add({ date, enabled: false }));
           } else {
             throw new Error('essa data já existe');
           }
@@ -140,5 +140,16 @@ export class FirebaseService {
       .then(snapshot => {
         return snapshot.size > 0;
       });
+  }
+
+  getDisabledDates(): Promise<string[]> {
+    return this.firestore.collection<Appointment>('dates', ref => ref.where('enabled', '==', false))
+     .get()
+     .pipe(
+        map(snapshot => {
+          return snapshot.docs.map(doc => doc.data().date as string);
+        })
+      )
+     .toPromise() as Promise<string[]>;
   }
 }

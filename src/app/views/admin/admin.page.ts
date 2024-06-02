@@ -137,9 +137,9 @@ export class AdminPage implements OnInit, OnDestroy {
     try {
       if (this.selectedDate) {
         const dataFormatada = this.formatarData(this.selectedDate);
-
+  
         await this.firebaseService.addDate(dataFormatada);
-
+  
         const toast = await this.toastCtrl.create({
           message: 'Data desativada com sucesso!',
           duration: 1500,
