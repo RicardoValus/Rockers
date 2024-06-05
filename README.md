@@ -28,20 +28,20 @@ Execução no Celular
 
 Caso queira executar o projeto da forma "correta" no celular, siga os passos abaixo:
 
-    Abra seu Android Studio.
+  Abra seu Android Studio.
 
-    Abra o projeto no arquivo Android pela raiz do projeto.
+  Abra o projeto no arquivo Android pela raiz do projeto.
 
-    Ative o modo desenvolvedor do seu celular.
+  Ative o modo desenvolvedor do seu celular.
 
-    Conecte seu celular através da depuração por Wi-Fi:
-        Vá para Developer Options > Wireless Debugging > Pair using QR Code.
-        Escaneie o QR Code para parear seu dispositivo.
+  Conecte seu celular através da depuração por Wi-Fi:
+      Vá para Developer Options > Wireless Debugging > Pair using QR Code.
+      Escaneie o QR Code para parear seu dispositivo.
 
-    Em seu terminal do projeto na pasta raiz, utilize o comando abaixo para executar o projeto em seu celular em tempo real:
+  Em seu terminal do projeto na pasta raiz, utilize o comando abaixo para executar o projeto em seu celular em tempo real:
 
 
-ionic cap run android -l --external
+    ionic cap run android -l --external
 
 
 Uso
