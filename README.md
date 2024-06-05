@@ -10,8 +10,9 @@ Para clonar e executar este projeto, siga as etapas abaixo:
 
     Clone o repositório:
 
-HTTPS: https://github.com/RicardoValus/Rockers.git
-SSH: git@github.com:RicardoValus/Rockers.git
+    HTTPS: https://github.com/RicardoValus/Rockers.git
+
+    SSH: git@github.com:RicardoValus/Rockers.git
 
     cd Rockers
 
