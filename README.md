@@ -8,7 +8,7 @@ Instalação
 
 Para clonar e executar este projeto, siga as etapas abaixo:
 
-    Clone o repositório:
+  Clone o repositório:
 
     HTTPS: https://github.com/RicardoValus/Rockers.git
 
@@ -46,18 +46,18 @@ Caso queira executar o projeto da forma "correta" no celular, siga os passos aba
 
 Uso
 
-    Página de Login: Permite que usuários façam login no sistema.
-    Página de Registro: Permite que novos usuários se registrem.
-    Página de Recuperação de Senha: Permite que usuários recuperem suas senhas.
-    Página de Administração: Administradores podem adicionar, remover e editar barbeiros, bem como definir horários de trabalho e visualizar agendamentos.
-    Página do Usuário: Usuários podem agendar serviços, editar suas fotos de perfil e visualizar agendamentos confirmados.
+  Página de Login: Permite que usuários façam login no sistema.
+  Página de Registro: Permite que novos usuários se registrem.
+  Página de Recuperação de Senha: Permite que usuários recuperem suas senhas.
+  Página de Administração: Administradores podem adicionar, remover e editar barbeiros, bem como definir horários de trabalho e visualizar agendamentos.
+  Página do Usuário: Usuários podem agendar serviços, editar suas fotos de perfil e visualizar agendamentos confirmados.
 
 Tecnologias Utilizadas
 
-    Frontend:
-        Ionic
-        Angular
-        Angular Material
+  Frontend:
+      Ionic
+      Angular
+      Angular Material
 
-    Backend:
-        Firebase
+  Backend:
+      Firebase
