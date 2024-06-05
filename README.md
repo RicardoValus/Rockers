@@ -13,11 +13,11 @@ Para clonar e executar este projeto, siga as etapas abaixo:
 HTTPS: https://github.com/RicardoValus/Rockers.git
 SSH: git@github.com:RicardoValus/Rockers.git
 
-cd Rockers
+    cd Rockers
 
 Instale as dependências:
 
-npm install
+    npm install
 
 Inicie o servidor de desenvolvimento:
 
