@@ -30,9 +30,13 @@
       <ion-label position="floating">Senha</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="register-password-2" color="danger"
+    <!-- <ion-text class="register-password-2" color="danger"
       *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
       A senha é obrigatória
+    </ion-text> -->
+    <ion-text class="register-password-2" color="danger"
+      *ngIf="registerForm.get('password')?.errors?.['pattern'] && registerForm.get('password')?.touched">
+      A senha é obrigatória e deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.
     </ion-text>
 
     <ion-item class="register-password-3">

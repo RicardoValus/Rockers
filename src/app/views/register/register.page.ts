@@ -24,7 +24,11 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/)
+      ]],
       passwordConfirmation: ['', Validators.required],
     });
   }
@@ -46,16 +50,18 @@ export class RegisterPage implements OnInit {
     this.loading = true;
     if (!this.registerForm.valid) {
       this.loading = false;
-      this.presentToast('Erro ao Cadastrar!', 2000);
+      if (this.registerForm.get('password')!.errors && this.registerForm.get('password')!.touched) {
+        this.presentToast('A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, um número e um caractere especial.', 3000);
+      } else {
+        this.presentToast('Erro ao Cadastrar!', 2000);
+      }
     } else {
       const formData = this.registerForm.value;
-
       if (formData.password !== formData.passwordConfirmation) {
         this.loading = false;
         this.presentToast('A senha e a confirmação de senha não coincidem!', 3000);
         return;
       }
-
       this.auth.register(formData.email, formData.password, formData.username).then(() => {
         this.loading = false;
         this.presentToast('Registro realizado com sucesso!', 1500);

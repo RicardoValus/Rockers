@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Observable, map, of, take } from 'rxjs';
 
 @Injectable({
@@ -15,7 +16,8 @@ export class AuthService {
     private auth: AngularFireAuth,
     private storage: AngularFireStorage,
     private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController
   ) {
     this.auth.authState.subscribe(user => {
       if (user) {
@@ -79,18 +81,16 @@ export class AuthService {
     return of(false);
   }
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password).then(() => {
-      this.auth.authState.subscribe(user => {
+      this.auth.authState.pipe(take(1)).subscribe(user => {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        this.isAdmin().pipe(
-          take(1)
-        ).subscribe(isAdmin => {
+        this.isAdmin().pipe(take(1)).subscribe(isAdmin => {
           if (isAdmin) {
-            this.router.navigate(['/admin']);
+            this.navCtrl.navigateRoot(['/admin']);
           } else {
-            this.router.navigate(['/home']);
+            this.navCtrl.navigateRoot(['/home']);
           }
         });
       });

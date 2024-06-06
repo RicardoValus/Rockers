@@ -16,6 +16,7 @@
         <ion-card-title>Barbeiros</ion-card-title>
       </ion-card-header>
       <ion-card-content>
+        <div *ngIf="!barbers || barbers.length === 0" style="text-align: center;">Sem barbeiros registrados</div>
         <div class="barbers-container">
           <div (click)="setBarberID(i)" *ngFor="let barber of barbers; let i = index" class="barber-item"
             [class.selected-barber]="selectedBarber === barber" (click)="selectBarber(barber)">
@@ -71,6 +72,7 @@
             <ion-label>Datas Desativadas</ion-label>
           </ion-item>
           <div slot="content">
+            <div *ngIf="!dates || dates.length === 0" style="text-align: center;">Sem datas desativadas</div>
             <ion-item *ngFor="let date of dates; let i = index">
               {{ date.date }}
               <ion-icon name="trash" slot="end" color="danger" (click)="deleteDate(date.id)"></ion-icon>
@@ -96,6 +98,7 @@
             <ion-label>Horários de Trabalho</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
+            <div *ngIf="!times || times.length === 0" style="text-align: center;">Sem horários registrados</div>
             <ion-item *ngFor="let time of times">
               {{ time.time }}
               <ion-icon name="trash" slot="end" (click)="removeTime(time.id)" color="danger"></ion-icon>
@@ -113,10 +116,10 @@
       </ion-card-header>
 
       <ion-card-content>
+        <div *ngIf="!appointments || appointments.length === 0" style="text-align: center;">Sem clientes agendados</div>
         <ion-list>
           <ion-item *ngFor="let appointment of appointments ; let i = index">
             <ion-icon slot="start" name="checkbox-outline"></ion-icon>
-
             <ion-list *ngIf="appointment.services && appointment.services.length > 0">
               <ion-item class="item-client">
                 Cliente: {{ appointment.userName }}

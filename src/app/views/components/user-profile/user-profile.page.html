@@ -18,7 +18,7 @@
             <div>
               <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
                 <div class="file-btn">
-                  <input type="file" (change)="uploadFile($event.target)" accept="image/*">
+                  <input type="file" (change)="uploadFile($event.target)" accept="image/*" class="input-file">
                   <label class="file-input-label" for="customFile" id="filename" type="file"
                     (change)="uploadFile($event.target)" accept="image/*">Selecionar Foto</label>
                 </div>

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -21,19 +23,22 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule),
   },
   {
     path: 'user-profile',
-    loadChildren: () => import('./views/components/user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+    loadChildren: () => import('./views/components/user-profile/user-profile.module').then( m => m.UserProfilePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'appointment',
-    loadChildren: () => import('./views/appointment/appointment.module').then( m => m.AppointmentPageModule)
+    loadChildren: () => import('./views/appointment/appointment.module').then( m => m.AppointmentPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: () => import('./views/admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./views/admin/admin.module').then( m => m.AdminPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'reset-password',

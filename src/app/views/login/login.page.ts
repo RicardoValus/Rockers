@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/models/services/auth/auth.service';
 
 
@@ -18,7 +18,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder, 
     private router: Router, 
     private toastCtrl: ToastController,
-    private authService: AuthService
+    private authService: AuthService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +35,9 @@ export class LoginPage implements OnInit {
     const password = this.loginForm.get('password')?.value;
     try {
       await this.authService.login(username, password);
-      this.router.navigate(['/home']);
+
+      // this.router.navigate(['/home']);
+      this.navCtrl.navigateRoot(['/home']);
       this.presentToast('Login realizado com sucesso!');
       this.loading = false;
     } catch (error) {

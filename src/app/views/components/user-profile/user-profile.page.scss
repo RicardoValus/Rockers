@@ -14,11 +14,10 @@
 }
 
 .file-btn {
-  display: flex;
+  text-align: center;
   position: relative;
   align-items: center;
-  justify-content: center;
-  align-content: center;
+  opacity: 1;
 }
 
 .file-input-label {
@@ -37,6 +36,11 @@
 
 .file-input {
   display: none;
+}
+
+.input-file{
+  position: absolute;
+  opacity: 0;
 }
 
 
