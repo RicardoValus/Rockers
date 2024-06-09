@@ -14,12 +14,9 @@
 .logo-img {
   width: 50%;
   height: auto;
+  animation: pulse;
+  animation-duration: 2s;
 }
-
-// .body-container {
-//   max-width: 360px;
-//   margin: auto;
-// }
 
 .title-container {
   display: flex;
@@ -30,14 +27,12 @@
   display: flex;
   text-align: center;
   padding: 16px;
-  // border-bottom: 1px solid #AEB7B3;
 }
 
 .title-2 {
   display: flex;
   text-align: center;
   padding: 8px;
-  // border-bottom: 1px solid #AEB7B3;
 }
 
 .services-grid ion-row {
@@ -76,7 +71,6 @@
   margin: 0 auto;
 }
 
-
 .card-content-1 {
   width: 100%;
   height: 50%;
@@ -105,11 +99,7 @@
   margin-bottom: 20px;
 }
 
-
-//serviços /\
-
-//agendamentos \/
-
+/* Serviços */
 
 .barber-name {
   padding-top: 12px;
@@ -136,8 +126,6 @@
 .card-appointment,
 .card-calendar,
 .card-time {
-  // --background: #AEB7B3;
-  //  height: 50px;
   border: 2px solid #AEB7B3;
   border-radius: 20px;
 }
@@ -145,15 +133,6 @@
 .div-my-appointment {
   padding-right: 1%;
   padding-left: 1%;
-}
-
-// ion-item[slot="header"] {
-//   --background: #AEB7B3;
-// }
-
-.button-container {
-  display: flex;
-  justify-content: center;
 }
 
 .agend-button {
@@ -254,11 +233,11 @@ ion-modal ion-toolbar {
   --color: #ffffff !important;
 }
 
-.border-photo{
-  border: 1rem solid black
+.border-photo {
+  border: 1rem solid black;
 }
 
-ion-delegate-host{
+ion-delegate-host {
   height: auto;
 }
 

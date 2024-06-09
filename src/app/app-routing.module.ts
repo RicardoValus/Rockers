@@ -31,11 +31,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'appointment',
-    loadChildren: () => import('./views/appointment/appointment.module').then( m => m.AppointmentPageModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'admin',
     loadChildren: () => import('./views/admin/admin.module').then( m => m.AdminPageModule),
     canActivate: [AuthGuard]
@@ -43,10 +38,6 @@ const routes: Routes = [
   {
     path: 'reset-password',
     loadChildren: () => import('./views/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
-  },
-  {
-    path: 'test',
-    loadChildren: () => import('./views/test/test.module').then( m => m.TestPageModule)
   },
 
 ];

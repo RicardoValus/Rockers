@@ -24,11 +24,14 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/)
-      ]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/)
+        ]
+      ],
       passwordConfirmation: ['', Validators.required],
     });
   }
@@ -39,8 +42,8 @@ export class RegisterPage implements OnInit {
 
   async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
-      message: message,
-      duration: duration,
+      message,
+      duration,
       position: 'top'
     });
     toast.present();

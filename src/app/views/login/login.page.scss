@@ -14,6 +14,8 @@
 .logo-img {
   width: 50%;
   height: auto;
+  animation: pulse;
+  animation-duration: 2s;
 }
 
 .login-item-1,
@@ -60,7 +62,7 @@
   margin-top: 10px;
 }
 
-.forgot-password{
+.forgot-password {
   width: 97%;
   margin: 0 auto;
   padding: 4px 16px 0;

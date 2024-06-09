@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/models/services/auth/auth.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -15,8 +14,8 @@ export class LoginPage implements OnInit {
   loading: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private router: Router, 
+    private formBuilder: FormBuilder,
+    private router: Router,
     private toastCtrl: ToastController,
     private authService: AuthService,
     private navCtrl: NavController
@@ -33,23 +32,22 @@ export class LoginPage implements OnInit {
     this.loading = true;
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
+
     try {
       await this.authService.login(username, password);
-
-      // this.router.navigate(['/home']);
       this.navCtrl.navigateRoot(['/home']);
       this.presentToast('Login realizado com sucesso!');
-      this.loading = false;
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       this.presentToast('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
+    } finally {
       this.loading = false;
     }
   }
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
-      message: message,
+      message,
       duration: 3000,
       position: 'top'
     });
@@ -59,7 +57,7 @@ export class LoginPage implements OnInit {
   goToRegisterPage() {
     this.router.navigate(['/register']);
   }
-  
+
   goToResetPassword() {
     this.router.navigate(['/reset-password']);
   }

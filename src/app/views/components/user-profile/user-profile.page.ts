@@ -29,9 +29,7 @@ export class UserProfilePage implements OnInit {
     private authService: AuthService,
     private dialogRef: MatDialogRef<UserProfilePage>,
     private toastCtrl: ToastController
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     const usersSubscription = this.firebaseService.getUsers().subscribe(res => {

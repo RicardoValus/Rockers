@@ -4,7 +4,7 @@
   </div>
 </ion-header>
 
-<ion-content>
+<ion-content class="animate__animated animate__bounceInUp">
   <div>
     <mat-list>
       <mat-list-item matRipple (click)="changePhoto()">
@@ -22,7 +22,7 @@
     </div>
     <ion-grid class="services-grid">
       <ion-row>
-        <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let service of services">
+        <ion-col size="6" *ngFor="let service of services">
           <ion-card [class.selected]="isSelectedService(service)" (click)="toggleService(service)" class="card">
             <ion-card-content class="card-content-1">
               <ion-img [src]="getImagePath(service.name)" class="images"></ion-img>
@@ -45,9 +45,10 @@
               </ion-row>
               <ion-row>
                 <ion-col size="12">
-                <div *ngIf="!barbers || barbers.length === 0" style="text-align: center;">Sem barbeiros disponíveis</div>
-              </ion-col>
-                <ion-col size="6" size-sm="6" size-md="6" size-lg="6" *ngFor="let barber of barbers">
+                  <div *ngIf="!barbers || barbers.length === 0" style="text-align: center;">Sem barbeiros disponíveis
+                  </div>
+                </ion-col>
+                <ion-col size="6" *ngFor="let barber of barbers">
                   <div (click)="toggleBarber(barber)" [class.selected]="isSelected(barber)" matRipple>
                     <ion-list style="background: none">
                       <ion-item-group>
@@ -62,7 +63,6 @@
                       </ion-item-group>
                     </ion-list>
                   </div>
-      
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -73,15 +73,14 @@
       <div class="div-grid">
         <ion-card class="card-calendar">
           <ion-title class="title-2">Datas</ion-title>
-          <ion-item >
-            <ion-datetime-button style="--height: 0%;" datetime="datetime" slot="start" ></ion-datetime-button>
-
+          <ion-item>
+            <ion-datetime-button style="--height: 0%;" datetime="datetime" slot="start"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
+                <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"
+                  [isDateEnabled]="isDateEnabled"></ion-datetime>
               </ng-template>
             </ion-modal>
-
             <ion-button slot="end" (click)="selectDate()">Selecionar</ion-button>
           </ion-item>
         </ion-card>
@@ -90,28 +89,23 @@
       <div class="div-time">
         <ion-card class="card-time">
           <ion-title class="title-2">Horários</ion-title>
-
           <ion-accordion-group>
             <ion-accordion>
               <ion-item slot="header" color="light">
                 <ion-label>Selecione um horário</ion-label>
               </ion-item>
-              <div class="ion-padding" slot="content">
+              <div slot="content" style="padding-top: 16px;">
                 <div *ngIf="!times || times.length === 0" style="text-align: center;">Sem horários disponíveis</div>
                 <ion-radio-group (ionChange)="onTimeChange($event)">
                   <ion-list>
                     <ion-item *ngFor="let time of times">
-                      <ion-radio [value]="time" justify="space-between">
-                        {{ time.time }}
-                      </ion-radio>
+                      <ion-radio [value]="time" justify="space-between">{{ time.time }}</ion-radio>
                     </ion-item>
                   </ion-list>
                 </ion-radio-group>
-
               </div>
             </ion-accordion>
           </ion-accordion-group>
-
         </ion-card>
       </div>
 
@@ -152,9 +146,8 @@
     <ion-tab-bar color="primary">
       <ion-tab-button (click)="exitAlert()">
         <ion-icon name="exit" color="dark"></ion-icon>
-        <ion-label>
-          Sair
-        </ion-label>
+        <ion-label>Sair</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-footer>
+</ion-content>

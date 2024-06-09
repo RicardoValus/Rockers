@@ -5,7 +5,7 @@
   <ion-progress-bar *ngIf="loading" type="indeterminate" color="tertiary"></ion-progress-bar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" class="animate__animated animate__bounceInUp">
   <div class="title-container">
     <h1 class="title">Administração</h1>
   </div>
@@ -30,23 +30,23 @@
         <ion-button (click)="removeBarber()" color="danger" expand="block" shape="round">
           <ion-icon name="trash"></ion-icon> Remover Barbeiro
         </ion-button>
-        <ion-item *ngIf="showAddBarber" class="testando">
-
-          <div>
-          <ion-label class="custom-label" placeholder="" position="floating" >Nome do Barbeiro</ion-label>
-          <ion-input class="custom-input" type="text" [(ngModel)]="newBarberName"></ion-input>
-          </div>
-          <div style="display: flex; flex-direction: row; align-items: center;">
-            <div class="file-btn">
-              <input type="file" id="customFile" (change)="uploadFile($event.target)" accept="image/*" hidden>
-              <label class="file-input-label" for="customFile">Selecionar Foto</label>
-            </div>
+        <div *ngIf="showAddBarber">
+          <ion-item class="testando">
             <div>
-              <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
+              <ion-label class="custom-label" placeholder="" position="floating">Nome do Barbeiro</ion-label>
+              <ion-input class="custom-input" type="text" [(ngModel)]="newBarberName"></ion-input>
             </div>
-          </div>
-     
-        </ion-item>
+            <div style="display: flex; flex-direction: row; align-items: center;">
+              <div class="file-btn">
+                <input type="file" id="customFile" (change)="uploadFile($event.target)" accept="image/*" hidden>
+                <label class="file-input-label" for="customFile">Selecionar Foto</label>
+              </div>
+              <div>
+                <ion-button (click)="addBarber()" color="success" expand="block">Adicionar</ion-button>
+              </div>
+            </div>
+          </ion-item>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
@@ -54,15 +54,13 @@
   <div>
     <ion-card class="card-calendar">
       <ion-item>
-
         <ion-datetime-button datetime="datetime" slot="start"></ion-datetime-button>
-
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
+            <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"
+              [isDateEnabled]="isDateEnabled"></ion-datetime>
           </ng-template>
         </ion-modal>
-
         <ion-button (click)="desativarData()" color="danger" slot="end">Desativar</ion-button>
       </ion-item>
 
@@ -72,7 +70,9 @@
             <ion-label>Datas Desativadas</ion-label>
           </ion-item>
           <div slot="content">
-            <div *ngIf="!dates || dates.length === 0" style="text-align: center;">Sem datas desativadas</div>
+            <div *ngIf="!dates || dates.length === 0" style="text-align: center; margin: 16px;">
+              Sem datas desativadas
+            </div>
             <ion-item *ngFor="let date of dates; let i = index">
               {{ date.date }}
               <ion-icon name="trash" slot="end" color="danger" (click)="deleteDate(date.id)"></ion-icon>
@@ -139,13 +139,10 @@
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item>
-
         </ion-list>
       </ion-card-content>
     </ion-card>
   </div>
-
-
 </ion-content>
 
 <ion-footer>

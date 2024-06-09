@@ -9,6 +9,8 @@
 .logo-img {
   width: 50%;
   height: auto;
+  animation: pulse;
+  animation-duration: 2s;
 }
 
 .form-container {
@@ -20,35 +22,35 @@
   .form-container {
     max-width: 90%;
   }
+}
 
-  .register-user-1,
-  .register-email-1,
-  .register-password-1,
-  .register-password-3 {
-    width: 90%;
-    margin: 10px auto;
-    border-radius: 8px 8px 0 0;
-    border: medium solid darkgray;
-  }
+.register-user-1,
+.register-email-1,
+.register-password-1,
+.register-password-3 {
+  width: 90%;
+  margin: 10px auto;
+  border-radius: 8px 8px 0 0;
+  border: medium solid darkgray;
+}
 
-  .register-user-2,
-  .register-email-2,
-  .register-password-2,
-  .register-password-4 {
-    width: 90%;
-    margin: 0 auto;
-    padding: 4px 16px 0;
-    font-size: 12px;
-  }
+.register-user-2,
+.register-email-2,
+.register-password-2,
+.register-password-4 {
+  width: 90%;
+  margin: 0 auto;
+  padding: 4px 16px 0;
+  font-size: 12px;
+}
 
-  .custom-button-1 {
-    width: 90%;
-    margin: 20px auto;
-    border-radius: 100px;
-    gap: 8px;
-    --background: #AEB7B3 !important;
-    --color: #ffffff !important;
-  }
+.custom-button-1 {
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 100px;
+  gap: 8px;
+  --background: #AEB7B3 !important;
+  --color: #ffffff !important;
 }
 
 .route-register {
@@ -63,29 +65,3 @@
 .route-register a {
   margin-top: 10px;
 }
-
-// .file-input-label {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 81%;
-//   margin: auto;
-//   padding: 10px;
-//   background-color: #AEB7B3;
-//   color: #fff;
-//   border: none;
-//   border-radius: 100px;
-//   cursor: pointer;
-// }
-
-// .file-input-label:hover {
-//   background-color: #515152;
-// }
-
-// .file-input {
-//   display: none;
-// }
-
-// .input-file {
-//   --border-style: none;
-// }

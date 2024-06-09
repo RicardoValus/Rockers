@@ -8,9 +8,9 @@ import { AuthService } from '../models/services/auth/auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   canActivate(): boolean {
     const isLoggedIn = this.authService.getLoggedUserThroughLocalStorage() !== null;

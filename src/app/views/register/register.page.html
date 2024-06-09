@@ -5,7 +5,7 @@
   <ion-progress-bar *ngIf="loading" type="indeterminate" color="tertiary"></ion-progress-bar>
 </ion-header>
 
-<ion-content>
+<ion-content class="animate__animated animate__bounceInUp">
   <form [formGroup]="registerForm" class="form-container" (ngSubmit)="submitForm()">
 
     <ion-item class="register-user-1">
@@ -30,13 +30,10 @@
       <ion-label position="floating">Senha</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
-    <!-- <ion-text class="register-password-2" color="danger"
-      *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
-      A senha é obrigatória
-    </ion-text> -->
     <ion-text class="register-password-2" color="danger"
       *ngIf="registerForm.get('password')?.errors?.['pattern'] && registerForm.get('password')?.touched">
-      A senha é obrigatória e deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.
+      A senha é obrigatória e deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, um número e um caractere
+      especial.
     </ion-text>
 
     <ion-item class="register-password-3">
@@ -47,23 +44,6 @@
       *ngIf="registerForm.get('passwordConfirmation')?.errors && registerForm.get('passwordConfirmation')?.touched">
       A confirmação da senha é obrigatória
     </ion-text>
-
-    <!-- <ion-item class="input-file">
-      <label class="file-input-label" for="file-input">Selecionar uma foto de perfil</label>
-      <input id="file-input" class="file-input" type="file" accept="image/*" (change)="uploadFile($event)" />
-    </ion-item> -->
-
-    <!-- <ion-grid>
-      <ion-row>
-        <ion-col>Teste</ion-col>
-        <ion-col>Teste</ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-card>
-      <ion-card-header>Teste</ion-card-header>
-      <ion-card-content>Testando</ion-card-content>
-    </ion-card> -->
 
     <ion-button type="submit" class="custom-button-1" expand="block" shape="round">
       REGISTRAR

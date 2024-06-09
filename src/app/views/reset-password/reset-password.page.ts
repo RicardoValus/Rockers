@@ -49,7 +49,7 @@ export class ResetPasswordPage implements OnInit {
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
-      message: message,
+      message,
       duration: 3000,
       position: 'top'
     });

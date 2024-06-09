@@ -34,12 +34,12 @@ export class AdminPage implements OnInit, OnDestroy {
   newBarberName: string = '';
   newBarberAvatar: string = '';
   image: any;
-  barberID: string = ''
-  subscriptions: Subscription[] = []
+  barberID: string = '';
+  subscriptions: Subscription[] = [];
   showCalendar: boolean = false;
   dates: any;
   selectedDate!: string;
-  times: any
+  times: any;
   newTime: string = '';
   timeSelectedValue: string = '';
   appointments: any;
@@ -54,25 +54,25 @@ export class AdminPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ngOnInit() {
     const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
       this.barbers = res.map(barber => {
-        return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any } as any
+        return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any };
       });
     });
 
     const dateSubscription = this.firebaseService.getDates().subscribe(res => {
       this.dates = res.map(date => {
-        return { id: date.payload.doc.id, ...date.payload.doc.data() as any } as any
+        return { id: date.payload.doc.id, ...date.payload.doc.data() as any };
       });
     });
 
     const timeSubscription = this.firebaseService.getTimes().subscribe(res => {
       this.times = res.map(time => {
-        return { id: time.payload.doc.id, ...time.payload.doc.data() as any } as any
+        return { id: time.payload.doc.id, ...time.payload.doc.data() as any };
       });
     });
 
@@ -87,7 +87,6 @@ export class AdminPage implements OnInit, OnDestroy {
     this.subscriptions.push(barberSubscription, dateSubscription, timeSubscription, appointmentsSubscription);
   }
 
-  //barbeiros
   toggleAddBarber() {
     this.showAddBarber = !this.showAddBarber;
   }
@@ -106,8 +105,8 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   setBarberID(index: number) {
-    this.barberID = this.barbers[index].id
-    console.log(this.barberID)
+    this.barberID = this.barbers[index].id;
+    console.log(this.barberID);
   }
 
   selectBarber(barber: Barber) {
@@ -115,7 +114,7 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async removeBarber() {
-    this.firebaseService.removeBarber(this.barberID)
+    this.firebaseService.removeBarber(this.barberID);
     const toast = await this.toastCtrl.create({
       message: 'Barbeiro removido com sucesso!',
       duration: 1500,
@@ -128,7 +127,6 @@ export class AdminPage implements OnInit, OnDestroy {
     this.image = image.files;
   }
 
-  //calendario
   toggleCalendar() {
     setTimeout(() => {
       this.showCalendar = !this.showCalendar;
@@ -139,9 +137,9 @@ export class AdminPage implements OnInit, OnDestroy {
     try {
       if (this.selectedDate) {
         const dataFormatada = this.formatarData(this.selectedDate);
-  
+
         await this.firebaseService.addDate(dataFormatada);
-  
+
         const toast = await this.toastCtrl.create({
           message: 'Data desativada com sucesso!',
           duration: 1500,
@@ -155,8 +153,7 @@ export class AdminPage implements OnInit, OnDestroy {
       const toast = await this.toastCtrl.create({
         message: 'Esta data já foi desativada.',
         duration: 1500,
-        position: 'top',
-        // color: 'danger'
+        position: 'top'
       });
       await toast.present();
     }
@@ -173,10 +170,9 @@ export class AdminPage implements OnInit, OnDestroy {
 
   deleteDate(dateId: string) {
     this.firebaseService.removeDate(dateId);
-    console.log('removido')
+    console.log('removido');
   }
 
-  //horários
   async selectTime(event: any) {
     const timesSelected = event.detail.value;
     await this.firebaseService.addTime(timesSelected);
@@ -234,7 +230,7 @@ export class AdminPage implements OnInit, OnDestroy {
   signOut(): void {
     this.authService.signOut();
   }
-  
+
   async exitAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Deseja sair da sua conta?',
@@ -242,7 +238,7 @@ export class AdminPage implements OnInit, OnDestroy {
         {
           text: 'Não',
           role: 'cancel',
-          cssClass: 'alert-button-cancel',
+          cssClass: 'alert-button-cancel'
         },
         {
           text: 'Sim',
@@ -250,9 +246,9 @@ export class AdminPage implements OnInit, OnDestroy {
           handler: () => {
             this.exitToast();
             this.signOut();
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
 
     await alert.present();
@@ -262,7 +258,7 @@ export class AdminPage implements OnInit, OnDestroy {
     const toast = await this.toastCtrl.create({
       message: 'Você saiu com sucesso!',
       duration: 1500,
-      position: 'top',
+      position: 'top'
     });
     toast.present();
   }
@@ -272,8 +268,8 @@ export class AdminPage implements OnInit, OnDestroy {
   }
 
   async deleteAppointment(index: number) {
-    console.log(this.appointments[index].id)
-    const appointmentId = this.appointments[index].id
+    console.log(this.appointments[index].id);
+    const appointmentId = this.appointments[index].id;
 
     const alert = await this.alertCtrl.create({
       header: 'Deseja cancelar este agendamento?',
@@ -281,7 +277,7 @@ export class AdminPage implements OnInit, OnDestroy {
         {
           text: 'Não',
           role: 'cancel',
-          cssClass: 'alert-button-cancel',
+          cssClass: 'alert-button-cancel'
         },
         {
           text: 'Sim',
@@ -293,9 +289,9 @@ export class AdminPage implements OnInit, OnDestroy {
               console.error(error);
               this.presentToast('Ocorreu um erro ao cancelar o agendamento. Por favor, tente novamente.');
             });
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
 
     await alert.present();
@@ -314,8 +310,17 @@ export class AdminPage implements OnInit, OnDestroy {
     const toast = await this.toastCtrl.create({
       message: 'Agendamento cancelado com sucesso!',
       duration: 1500,
-      position: 'top',
+      position: 'top'
     });
     toast.present();
   }
+
+  isDateEnabled = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDay = date.getUTCDay();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return utcDay !== 0 && date >= today;
+  };
 }

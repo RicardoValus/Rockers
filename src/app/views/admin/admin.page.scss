@@ -6,10 +6,11 @@
   background-color: #AEB7B3;
 }
 
-// height 15vh -  width39%
 .logo-img {
   width: 50%;
   height: auto;
+  animation: pulse;
+  animation-duration: 2s;
 }
 
 .title-container {
@@ -20,7 +21,6 @@
 .title {
   display: flex;
   justify-content: center;
-  // border-bottom: 1px solid #AEB7B3;
 }
 
 .item-client {
@@ -38,11 +38,10 @@
 
 .barber-item {
   flex-shrink: 0;
-  width: calc(33.33% - 20px);
   margin: 10px;
   text-align: center;
+  padding: 16px;
 }
-
 
 .barber-avatar {
   width: 80px;
@@ -54,7 +53,6 @@
 @media (max-width: 576px) {
   .barbers-container {
     flex-wrap: wrap;
-
     justify-content: center;
     overflow-x: initial;
   }
@@ -201,7 +199,7 @@ ion-modal {
 .file-input-label {
   display: inline-block;
   padding: 0.25em 0.5em;
-  font-size: 0.75em; 
+  font-size: 0.75em;
   color: white;
   border: none;
   border-radius: 4px;
@@ -209,13 +207,14 @@ ion-modal {
   text-align: center;
 }
 
-.testando{
+.testando {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
 }
-ion-input{
+
+ion-input {
   padding-bottom: 10px;
 }

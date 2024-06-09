@@ -5,15 +5,15 @@
   <ion-progress-bar *ngIf="loading" type="indeterminate" color="tertiary"></ion-progress-bar>
 </ion-header>
 
-<ion-content>
+<ion-content class="animate__animated animate__bounceInUp">
   <form [formGroup]="loginForm" class="form-container">
 
     <ion-item class="login-item-1">
       <ion-label position="floating">E-mail</ion-label>
       <ion-input formControlName="username" required></ion-input>
     </ion-item>
-    <ion-text class="login-item-2" color="danger" *ngIf="loginForm
-    .get('username')?.errors && loginForm.get('username')?.touched">
+    <ion-text class="login-item-2" color="danger"
+      *ngIf="loginForm.get('username')?.errors && loginForm.get('username')?.touched">
       O usuário é obrigatório
     </ion-text>
 
@@ -21,16 +21,19 @@
       <ion-label position="floating">Senha</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
-    <ion-text class="password-item-2" color="danger" *ngIf="loginForm
-    .get('password')?.errors && loginForm.get('password')?.touched">
+    <ion-text class="password-item-2" color="danger"
+      *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
       A senha é obrigatória
     </ion-text>
+
     <div class="forgot-password">
       <a (click)="goToResetPassword()">Esqueceu a senha?</a>
     </div>
+
     <ion-button class="custom-button-1" expand="block" shape="round" (click)="login()">
       ENTRAR
     </ion-button>
+
     <div class="route-login">
       <ion-label>Não possui uma conta?</ion-label>
       <a (click)="goToRegisterPage()"> Registre aqui.</a>
