@@ -22,7 +22,7 @@ Instale as dependências:
 
 Inicie o servidor de desenvolvimento:
 
-    npm serve
+    ionic serve
 
 Execução no Celular
 
