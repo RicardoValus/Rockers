@@ -22,11 +22,11 @@ Instale as dependências:
 
 Inicie o servidor de desenvolvimento:
 
-    npm start
+    npm serve
 
 Execução no Celular
 
-Caso queira executar o projeto da forma "correta" no celular, siga os passos abaixo:
+Caso queira executar o projeto no celular, siga os passos abaixo:
 
   Abra seu Android Studio.
 
