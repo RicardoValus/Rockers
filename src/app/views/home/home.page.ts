@@ -76,6 +76,11 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!window.location.hash) {
+      window.location.hash = 'loaded';
+      window.location.reload();
+    }
+
     const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
       this.barbers = res.map(barber => {
         return { id: barber.payload.doc.id, ...barber.payload.doc.data() as any };
