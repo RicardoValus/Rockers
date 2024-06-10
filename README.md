@@ -66,7 +66,9 @@ Diagrama UML:
 Tabela de Levantamento de Requisitos:
 
 Requisitos Funcionais:
+
 ![image](https://github.com/RicardoValus/Rockers/assets/100782392/aa932171-3b7a-4357-acf7-099ba7cf3034)
 
 Requisitos Não Funcionais:
+
 ![image](https://github.com/RicardoValus/Rockers/assets/100782392/77ddaec3-bf79-4309-b8e1-ce623b95afe2)
