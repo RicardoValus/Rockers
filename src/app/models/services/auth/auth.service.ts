@@ -82,21 +82,24 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password).then(() => {
-      this.auth.authState.pipe(take(1)).subscribe(user => {
+    try {
+      await this.auth.signInWithEmailAndPassword(email, password);
+      const user = await this.auth.authState.pipe(take(1)).toPromise();
+      if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        this.isAdmin().pipe(take(1)).subscribe(isAdmin => {
-          if (isAdmin) {
-            this.navCtrl.navigateRoot(['/admin']);
-          } else {
-            this.navCtrl.navigateRoot(['/home']);
-          }
-        });
-      });
-    });
+        const isAdmin = await this.isAdmin().pipe(take(1)).toPromise();
+        if (isAdmin) {
+          this.navCtrl.navigateRoot(['/admin']);
+        } else {
+          this.navCtrl.navigateRoot(['/home']);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      throw error;
+    }
   }
-
 
   resetPassword(email: string) {
     return this.auth.sendPasswordResetEmail(email);

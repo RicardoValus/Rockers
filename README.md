@@ -1,10 +1,10 @@
 Projeto de Sistema de Agendamento para Barbeiros
 
+Descrição
+
 Este projeto é um sistema de agendamento para barbeiros que permite aos usuários registrar-se, fazer login, agendar serviços e aos administradores gerenciar barbeiros e horários. O sistema foi desenvolvido com foco na facilidade de uso e segurança.
 
 Instalação
-
-Para baixar o aplicativo em seu celular, baixe o "app-debug.apk" que está anexado neste projeto e execute-o para instalá-lo.
 
 Para clonar e executar este projeto, siga as etapas abaixo:
 
@@ -40,7 +40,9 @@ Caso queira executar o projeto no celular, siga os passos abaixo:
 
   Em seu terminal do projeto na pasta raiz, utilize o comando abaixo para executar o projeto em seu celular em tempo real:
 
+
     ionic cap run android -l --external
+
 
 Uso
 
