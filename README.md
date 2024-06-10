@@ -67,8 +67,9 @@ Tabela de Levantamento de Requisitos:
 
 Requisitos Funcionais:
 
-![image](https://github.com/RicardoValus/Rockers/assets/100782392/aa932171-3b7a-4357-acf7-099ba7cf3034)
+![image](https://github.com/RicardoValus/Rockers/assets/100782392/7a35e716-bd4c-4b5f-b5bb-b04cb1a6a13d)
 
 Requisitos Não Funcionais:
 
-![image](https://github.com/RicardoValus/Rockers/assets/100782392/77ddaec3-bf79-4309-b8e1-ce623b95afe2)
+![image](https://github.com/RicardoValus/Rockers/assets/100782392/672cbdaf-b95a-4d17-ba6b-b7bd14264655)
+
