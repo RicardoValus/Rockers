@@ -40,9 +40,7 @@ Caso queira executar o projeto no celular, siga os passos abaixo:
 
   Em seu terminal do projeto na pasta raiz, utilize o comando abaixo para executar o projeto em seu celular em tempo real:
 
-
     ionic cap run android -l --external
-
 
 Uso
 
@@ -62,5 +60,13 @@ Tecnologias Utilizadas
     Backend:
       Firebase
 
+Diagrama UML:
 ![image](https://github.com/RicardoValus/Rockers/assets/100782392/779e44e4-e7aa-43d3-a2ad-cfdcae565ef4)
 
+Tabela de Levantamento de Requisitos:
+
+Requisitos Funcionais:
+![image](https://github.com/RicardoValus/Rockers/assets/100782392/aa932171-3b7a-4357-acf7-099ba7cf3034)
+
+Requisitos Não Funcionais:
+![image](https://github.com/RicardoValus/Rockers/assets/100782392/77ddaec3-bf79-4309-b8e1-ce623b95afe2)
