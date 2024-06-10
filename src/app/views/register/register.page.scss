@@ -36,7 +36,6 @@
 
 .register-user-2,
 .register-email-2,
-.register-password-2,
 .register-password-4 {
   width: 90%;
   margin: 0 auto;
@@ -64,4 +63,8 @@
 .route-register ion-label,
 .route-register a {
   margin-top: 10px;
+}
+
+.register-password-2{
+  font-size: 12px;
 }
