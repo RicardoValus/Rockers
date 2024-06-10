@@ -13,6 +13,12 @@ interface Appointment {
   userName: string;
 }
 
+interface Notification {
+  title: string;
+  body: string;
+  id: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -144,12 +150,34 @@ export class FirebaseService {
 
   getDisabledDates(): Promise<string[]> {
     return this.firestore.collection<Appointment>('dates', ref => ref.where('enabled', '==', false))
-     .get()
-     .pipe(
+      .get()
+      .pipe(
         map(snapshot => {
           return snapshot.docs.map(doc => doc.data().date as string);
         })
       )
-     .toPromise() as Promise<string[]>;
+      .toPromise() as Promise<string[]>;
   }
+
+  addNotification(notification: Notification) {
+    return this.firestore.collection('notifications').add(notification);
+  }
+
+  getNotifications() {
+    return this.firestore.collection('notifications', ref => ref.orderBy('id', 'desc')).snapshotChanges();
+  }
+
+  clearNotifications() {
+    return this.firestore.collection('notifications').get().toPromise().then(snapshot => {
+      if (snapshot && !snapshot.empty) {
+        const batch = this.firestore.firestore.batch();
+        snapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        return batch.commit();
+      }
+      return Promise.resolve();
+    });
+  }
+
 }

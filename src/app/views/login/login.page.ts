@@ -35,7 +35,6 @@ export class LoginPage implements OnInit {
 
     try {
       await this.authService.login(username, password);
-      this.navCtrl.navigateRoot(['/home']);
       this.presentToast('Login realizado com sucesso!');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -44,6 +43,7 @@ export class LoginPage implements OnInit {
       this.loading = false;
     }
   }
+
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({

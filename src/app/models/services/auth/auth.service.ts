@@ -97,6 +97,7 @@ export class AuthService {
     });
   }
 
+
   resetPassword(email: string) {
     return this.auth.sendPasswordResetEmail(email);
   }

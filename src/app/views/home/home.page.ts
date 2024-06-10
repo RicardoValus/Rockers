@@ -291,13 +291,27 @@ export class HomePage implements OnInit {
         return;
       }
 
-      this.firebaseService.addAppointment(this.appointment).then(() => {
+      this.firebaseService.addAppointment(this.appointment).then(async () => {
         this.presentToast('Agendamento realizado com sucesso!');
+        await this.notifyAdmin();
+
+        this.selectedServices = [];
+        this.selectedBarber = null;
+        this.selectedTime = null;
+        this.appointment = {
+          services: [],
+          barber: null,
+          date: '',
+          time: '',
+          userId: this.authService.getLoggedUserThroughLocalStorage().uid,
+          userName: this.userName
+        };
       }).catch((error) => {
         this.presentToast('Ocorreu um erro ao realizar o agendamento. Por favor, tente novamente.');
       });
     });
   }
+
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
@@ -321,4 +335,12 @@ export class HomePage implements OnInit {
 
     return utcDay !== 0 && date >= today;
   };
+
+  async notifyAdmin() {
+    await this.firebaseService.addNotification({
+      title: '',
+      body: '',
+      id: 1
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { AlertController, IonSelect, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/models/services/auth/auth.service';
@@ -57,11 +58,14 @@ export class AdminPage implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (!window.location.hash) {
       window.location.hash = 'loaded';
       window.location.reload();
     }
+
+    // Solicitação de permissão para notificações
+    await LocalNotifications.requestPermissions();
 
     const barberSubscription = this.firebaseService.getBarbers().subscribe(res => {
       this.barbers = res.map(barber => {
@@ -90,6 +94,27 @@ export class AdminPage implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(barberSubscription, dateSubscription, timeSubscription, appointmentsSubscription);
+
+    const notificationSubscription = this.firebaseService.getNotifications().subscribe(async notifications => {
+      if (notifications && notifications.length > 0) {
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              title: 'Rockers',
+              body: 'Houve um novo agendamento',
+              id: 1,
+              extra: {
+                data: 'Notificação'
+              },
+              iconColor: '#118AB2'
+            }
+          ]
+        });
+        await this.firebaseService.clearNotifications();
+      }
+    });
+
+    this.subscriptions.push(notificationSubscription);
   }
 
   toggleAddBarber() {
