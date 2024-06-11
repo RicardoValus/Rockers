@@ -59,7 +59,3 @@ Tecnologias Utilizadas
 
     Backend:
       Firebase
-Requisitos Não Funcionais:
-
-![image](https://github.com/RicardoValus/Rockers/assets/100782392/672cbdaf-b95a-4d17-ba6b-b7bd14264655)
-
