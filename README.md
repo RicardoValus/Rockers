@@ -59,16 +59,6 @@ Tecnologias Utilizadas
 
     Backend:
       Firebase
-
-Diagrama UML:
-![image](https://github.com/RicardoValus/Rockers/assets/100782392/779e44e4-e7aa-43d3-a2ad-cfdcae565ef4)
-
-Tabela de Levantamento de Requisitos:
-
-Requisitos Funcionais:
-
-![image](https://github.com/RicardoValus/Rockers/assets/100782392/7a35e716-bd4c-4b5f-b5bb-b04cb1a6a13d)
-
 Requisitos Não Funcionais:
 
 ![image](https://github.com/RicardoValus/Rockers/assets/100782392/672cbdaf-b95a-4d17-ba6b-b7bd14264655)
