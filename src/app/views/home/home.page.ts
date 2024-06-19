@@ -327,14 +327,14 @@ export class HomePage implements OnInit {
     dialogRef.afterClosed().subscribe(result => { });
   }
 
-  isDateEnabled = (dateString: string) => {
-    const date = new Date(dateString);
-    const utcDay = date.getUTCDay();
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+  // isDateEnabled = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   const utcDay = date.getUTCDay();
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
 
-    return utcDay !== 0 && date >= today;
-  };
+  //   return utcDay !== 0 && date >= today;
+  // };
 
   async notifyAdmin() {
     await this.firebaseService.addNotification({
