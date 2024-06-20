@@ -57,8 +57,7 @@
         <ion-datetime-button datetime="datetime" slot="start"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"
-              [isDateEnabled]="isDateEnabled"></ion-datetime>
+            <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
           </ng-template>
         </ion-modal>
         <ion-button (click)="desativarData()" color="danger" slot="end">Desativar</ion-button>

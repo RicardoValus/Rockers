@@ -345,12 +345,12 @@ export class AdminPage implements OnInit, OnDestroy {
     toast.present();
   }
 
-  isDateEnabled = (dateString: string) => {
-    const date = new Date(dateString);
-    const utcDay = date.getUTCDay();
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+  // isDateEnabled = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   const utcDay = date.getUTCDay();
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
 
-    return utcDay !== 0 && date >= today;
-  };
+  //   return utcDay !== 0 && date >= today;
+  // };
 }
