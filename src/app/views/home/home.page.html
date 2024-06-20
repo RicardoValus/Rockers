@@ -77,7 +77,8 @@
             <ion-datetime-button style="--height: 0%;" datetime="datetime" slot="start"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"></ion-datetime>
+                <ion-datetime id="datetime" presentation="date" [(ngModel)]="selectedDate"
+                  [isDateEnabled]="isWeekday"></ion-datetime>
               </ng-template>
             </ion-modal>
             <ion-button slot="end" (click)="selectDate()">Selecionar</ion-button>

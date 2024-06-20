@@ -82,6 +82,10 @@ export class AdminPage implements OnInit, OnDestroy {
     const timeSubscription = this.firebaseService.getTimes().subscribe(res => {
       this.times = res.map(time => {
         return { id: time.payload.doc.id, ...time.payload.doc.data() as any };
+      }).sort((a, b) => {
+        const timeA = parseInt(a.time.replace(':', ''), 10);
+        const timeB = parseInt(b.time.replace(':', ''), 10);
+        return timeA - timeB;
       });
     });
 
